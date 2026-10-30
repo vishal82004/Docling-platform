@@ -1,0 +1,50 @@
+{
+  "test_name": "phase3_smoke_test",
+  "started_at": "2026-10-29T16:57:08.568786+00:00",
+  "base_url": "http://127.0.0.1:5001",
+  "sample_url": "https://arxiv.org/pdf/2501.17887",
+  "steps": {
+    "health_check": {
+      "status": "passed",
+      "latency_seconds": 0.0176,
+      "response": {
+        "status": "ok"
+      }
+    },
+    "submission": {
+      "status": "passed",
+      "latency_seconds": 0.0495,
+      "task_id": "ea47cb96-3faf-4ad4-86a4-ba8beda576de",
+      "initial_status": "pending"
+    },
+    "polling": {
+      "status": "passed",
+      "polling_duration_seconds": 24.2946,
+      "final_task_status": "success",
+      "status_response": {
+        "task_id": "ea47cb96-3faf-4ad4-86a4-ba8beda576de",
+        "task_type": "convert",
+        "task_status": "success",
+        "task_position": null,
+        "task_meta": {
+          "num_docs": 0,
+          "num_processed": 0,
+          "num_succeeded": 0,
+          "num_partially_succeeded": 0,
+          "num_failed": 0
+        },
+        "error_message": null,
+        "failure": null
+      }
+    },
+    "result_retrieval": {
+      "status": "passed",
+      "latency_seconds": 0.0294,
+      "documents_count": 0
+    }
+  },
+  "success": true,
+  "elapsed_seconds": 24.3913,
+  "error": null,
+  "finished_at": "2026-10-29T16:57:32.960112+00:00"
+}

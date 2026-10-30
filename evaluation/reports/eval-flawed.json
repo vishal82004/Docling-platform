@@ -1,0 +1,59 @@
+{
+  "evaluation_name": "invoice_extraction_evaluation",
+  "candidate": "flawed",
+  "prompt_version": "extraction-flawed",
+  "dataset_version": "invoice-eval-v1",
+  "timestamp": "2026-10-30T06:12:33.005651+00:00",
+  "total_documents": 25,
+  "total_elapsed_seconds": 0.2829,
+  "metrics": {
+    "overall_field_accuracy": 0.25,
+    "exact_match_rate": 0.0,
+    "schema_valid_rate": 0.0,
+    "failure_rate": 0.0,
+    "field_accuracies": {
+      "invoice_number": 0.04,
+      "vendor": 0.88,
+      "invoice_date": 0.04,
+      "total": 0.04
+    },
+    "latency": {
+      "avg_sec": 0.0103,
+      "p50_sec": 0.0102,
+      "p95_sec": 0.0106,
+      "min_sec": 0.0101,
+      "max_sec": 0.0106
+    }
+  },
+  "quality_gate": {
+    "overall_passed": false,
+    "checks": {
+      "min_field_accuracy": {
+        "target": 0.85,
+        "actual": 0.25,
+        "passed": false
+      },
+      "min_schema_valid_rate": {
+        "target": 0.95,
+        "actual": 0.0,
+        "passed": false
+      },
+      "min_exact_match_rate": {
+        "target": 0.75,
+        "actual": 0.0,
+        "passed": false
+      },
+      "max_failure_rate": {
+        "target": 0.05,
+        "actual": 0.0,
+        "passed": true
+      },
+      "max_p95_latency_sec": {
+        "target": 5.0,
+        "actual": 0.0106,
+        "passed": true
+      }
+    }
+  },
+  "sample_errors_count": 25
+}

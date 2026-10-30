@@ -1,0 +1,53 @@
+{
+  "report_name": "Phase 4 MLOps Candidate Evaluation & Quality Gate Comparison",
+  "dataset": "invoice-eval-v1",
+  "total_documents": 25,
+  "mlflow_experiment": "docling-invoice-extraction",
+  "generated_at": "2026-10-30T06:15:00Z",
+  "thresholds": {
+    "min_field_accuracy": 0.85,
+    "min_schema_valid_rate": 0.95,
+    "min_exact_match_rate": 0.75,
+    "max_failure_rate": 0.05,
+    "max_p95_latency_sec": 5.0
+  },
+  "candidates": {
+    "baseline-v1": {
+      "prompt_version": "extraction-v1",
+      "schema_valid_rate": 1.0,
+      "overall_field_accuracy": 0.97,
+      "exact_match_rate": 0.88,
+      "failure_rate": 0.0,
+      "field_accuracies": {
+        "invoice_number": 1.0,
+        "vendor": 0.96,
+        "invoice_date": 0.92,
+        "total": 1.0
+      },
+      "latency_p50_ms": 15.5,
+      "latency_p95_ms": 16.4,
+      "quality_gate": "PASSED",
+      "exit_code": 0,
+      "ci_action": "Eligible for production release"
+    },
+    "flawed-candidate": {
+      "prompt_version": "extraction-flawed",
+      "schema_valid_rate": 0.0,
+      "overall_field_accuracy": 0.25,
+      "exact_match_rate": 0.0,
+      "failure_rate": 0.0,
+      "field_accuracies": {
+        "invoice_number": 0.04,
+        "vendor": 0.88,
+        "invoice_date": 0.04,
+        "total": 0.04
+      },
+      "latency_p50_ms": 10.2,
+      "latency_p95_ms": 10.6,
+      "quality_gate": "FAILED",
+      "exit_code": 1,
+      "ci_action": "Release blocked by quality gate"
+    }
+  }
+}
+

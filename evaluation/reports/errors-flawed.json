@@ -1,0 +1,627 @@
+[
+  {
+    "doc_id": "inv_001",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": false,
+      "invoice_date": false,
+      "total": true
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "INVOICE",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "INV-2026-001",
+      "vendor": "Acme Industrial Supplies",
+      "invoice_date": "2026-01-15",
+      "total": 1450.75
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_002",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": false,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "COMMERCIAL INVOICE",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "GC-8921",
+      "vendor": "Global Cloud Logistics",
+      "invoice_date": "2026-02-18",
+      "total": 3200.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_003",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0105,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Nexus Office Solutions LLC",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "NOS-1049",
+      "vendor": "Nexus Office Solutions",
+      "invoice_date": "2026-03-04",
+      "total": 450.2
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_004",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "VERTEX DATA SYSTEMS",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "VTX-4401",
+      "vendor": "Vertex Data Systems",
+      "invoice_date": "2026-04-12",
+      "total": 12900.5
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_005",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "SUMMIT HARDWARE CORP.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "SH-7712",
+      "vendor": "Summit Hardware",
+      "invoice_date": "2026-05-20",
+      "total": 85.99
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_006",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0106,
+    "extracted": {
+      "invoice": null,
+      "vendor": "QUANTUM ENERGY SERVICES Ltd",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "QE-901",
+      "vendor": "Quantum Energy Services",
+      "invoice_date": "2026-06-01",
+      "total": 5420.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_007",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Horizon Media Group LLC",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "HMG-302",
+      "vendor": "Horizon Media Group",
+      "invoice_date": "2026-07-19",
+      "total": 875.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_008",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0103,
+    "extracted": {
+      "invoice": null,
+      "vendor": "IRONCLAD SECURITY TECHNOLOGIES Inc.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "IC-5519",
+      "vendor": "Ironclad Security Technologies",
+      "invoice_date": "2026-08-22",
+      "total": 2400.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_009",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "BlueSky Catering Ltd.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "BSC-109",
+      "vendor": "BlueSky Catering",
+      "invoice_date": "2026-09-09",
+      "total": 650.4
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_010",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0103,
+    "extracted": {
+      "invoice": null,
+      "vendor": "PIONEER FREIGHT & TRANSPORT",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "PFT-883",
+      "vendor": "Pioneer Freight & Transport",
+      "invoice_date": "2026-10-15",
+      "total": 1850.25
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_011",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0104,
+    "extracted": {
+      "invoice": null,
+      "vendor": "SENTINEL CYBER SOLUTIONS",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "SCS-2026-11",
+      "vendor": "Sentinel Cyber Solutions",
+      "invoice_date": "2026-11-02",
+      "total": 9500.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_012",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Alpha Packaging Co.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "APC-441",
+      "vendor": "Alpha Packaging",
+      "invoice_date": "2026-12-05",
+      "total": 320.15
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_013",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0105,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Beacon Electrical Works Ltd",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "BEW-992",
+      "vendor": "Beacon Electrical Works",
+      "invoice_date": "2026-01-28",
+      "total": 1120.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_014",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "DELTA CONSULTING PARTNERS LLC",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "DCP-761",
+      "vendor": "Delta Consulting Partners",
+      "invoice_date": "2026-02-14",
+      "total": 4750.8
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_015",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0106,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Evergreen Facility Maintenance Inc.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "EFM-003",
+      "vendor": "Evergreen Facility Maintenance",
+      "invoice_date": "2026-03-30",
+      "total": 910.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_016",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "HELIOS SOLAR SYSTEMS INC.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "HSS-552",
+      "vendor": "Helios Solar Systems",
+      "invoice_date": "2026-04-18",
+      "total": 15300.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_017",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0102,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Zenith Medical Supplies Corp.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "ZMS-881",
+      "vendor": "Zenith Medical Supplies",
+      "invoice_date": "2026-05-09",
+      "total": 2840.6
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_018",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0106,
+    "extracted": {
+      "invoice": null,
+      "vendor": "ATLAS HEAVY EQUIPMENT LLC",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "AHE-120",
+      "vendor": "Atlas Heavy Equipment",
+      "invoice_date": "2026-06-25",
+      "total": 34500.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_019",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Velocity Internet Services",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "VIS-990",
+      "vendor": "Velocity Internet Services",
+      "invoice_date": "2026-07-04",
+      "total": 199.99
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_020",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0106,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Sterling Print & Design LLC",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "SPD-331",
+      "vendor": "Sterling Print & Design",
+      "invoice_date": "2026-08-11",
+      "total": 430.5
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_021",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": true,
+      "vendor": false,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0104,
+    "extracted": {
+      "invoice": null,
+      "vendor": "Order Receipt",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": null,
+      "vendor": "Northern Woodcraft",
+      "invoice_date": "2026-09-14",
+      "total": 560.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_022",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "APEX SOFTWARE LABS Inc.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "ASL-404",
+      "vendor": "Apex Software Labs",
+      "invoice_date": "2026-10-20",
+      "total": 1780.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_023",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0105,
+    "extracted": {
+      "invoice": null,
+      "vendor": "KROMER AUTOMOTIVE GMBH",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "KRO-229",
+      "vendor": "Kromer Automotive",
+      "invoice_date": "2026-11-03",
+      "total": 4165.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_024",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": true,
+      "total": false
+    },
+    "latency_sec": 0.0101,
+    "extracted": {
+      "invoice": null,
+      "vendor": "QuickFix Plumbing Co.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "QFP-108",
+      "vendor": "QuickFix Plumbing",
+      "invoice_date": null,
+      "total": 275.5
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  },
+  {
+    "doc_id": "inv_025",
+    "is_schema_valid": false,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": false,
+      "vendor": true,
+      "invoice_date": false,
+      "total": false
+    },
+    "latency_sec": 0.0105,
+    "extracted": {
+      "invoice": null,
+      "vendor": "TITAN HEAVY INDUSTRIES LTD.",
+      "date": null,
+      "total": "$1,450.75"
+    },
+    "ground_truth": {
+      "invoice_number": "THI-9900",
+      "vendor": "Titan Heavy Industries",
+      "invoice_date": "2026-12-15",
+      "total": 88450.0
+    },
+    "error": "Schema violation: missing required keys ['invoice_number', 'invoice_date'], 'total' is not float"
+  }
+]

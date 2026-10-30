@@ -1,0 +1,149 @@
+{
+  "worker_label": "1-worker",
+  "batch_start": "2026-10-29T17:00:23.751765+00:00",
+  "batch_end": "2026-10-29T17:02:08.178476+00:00",
+  "total_jobs_requested": 5,
+  "total_jobs_submitted": 5,
+  "concurrency": 2,
+  "circuit_broken": false,
+  "elapsed_seconds": 101.32,
+  "jobs_per_minute": 2.96,
+  "summary": {
+    "submitted": 5,
+    "succeeded": 5,
+    "failed": 0,
+    "success_rate_percent": 100.0,
+    "latency_percentiles_sec": {
+      "min": 18.279,
+      "max": 42.609,
+      "avg": 36.483,
+      "p50": 40.519,
+      "p95": 42.204
+    }
+  },
+  "queue": {
+    "initial_depth": 0,
+    "final_depth": 0
+  },
+  "docker_stats": {
+    "initial": [
+      {
+        "name": "docling-platform-local-docling-api-1",
+        "cpu_percent": "0.11%",
+        "mem_usage": "713.4MiB / 7.616GiB",
+        "mem_percent": "9.15%",
+        "net_io": "2.37MB / 2.79MB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-docling-worker-1",
+        "cpu_percent": "0.00%",
+        "mem_usage": "1.38GiB / 7.616GiB",
+        "mem_percent": "18.12%",
+        "net_io": "7.59MB / 803kB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-redis-1",
+        "cpu_percent": "0.36%",
+        "mem_usage": "10.47MiB / 7.616GiB",
+        "mem_percent": "0.13%",
+        "net_io": "1.42MB / 2.42MB",
+        "block_io": "0B / 0B"
+      }
+    ],
+    "final": [
+      {
+        "name": "docling-platform-local-docling-api-1",
+        "cpu_percent": "0.11%",
+        "mem_usage": "707.7MiB / 7.616GiB",
+        "mem_percent": "9.07%",
+        "net_io": "3.66MB / 3.13MB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-docling-worker-1",
+        "cpu_percent": "0.00%",
+        "mem_usage": "1.384GiB / 7.616GiB",
+        "mem_percent": "18.18%",
+        "net_io": "10.7MB / 1.12MB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-redis-1",
+        "cpu_percent": "0.51%",
+        "mem_usage": "10.88MiB / 7.616GiB",
+        "mem_percent": "0.14%",
+        "net_io": "1.96MB / 3.69MB",
+        "block_io": "0B / 0B"
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "job_index": 2,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-29T17:00:23.755745+00:00",
+      "task_id": "3557176b-9cc6-495d-9504-3ce47df0cef6",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0567,
+      "poll_duration_sec": 18.2219,
+      "total_latency_sec": 18.279,
+      "initial_status": "pending",
+      "finished_at": "2026-10-29T17:00:42.034723+00:00"
+    },
+    {
+      "job_index": 1,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-29T17:00:23.754919+00:00",
+      "task_id": "3c5a3f97-7400-4f5a-aa9a-9cc785828e9e",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0594,
+      "poll_duration_sec": 40.4593,
+      "total_latency_sec": 40.5187,
+      "initial_status": "pending",
+      "finished_at": "2026-10-29T17:01:04.273607+00:00"
+    },
+    {
+      "job_index": 3,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-29T17:00:42.035038+00:00",
+      "task_id": "a41a940a-9be8-479e-a6ed-81dd08cc90e0",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0097,
+      "poll_duration_sec": 40.4189,
+      "total_latency_sec": 40.4287,
+      "initial_status": "pending",
+      "finished_at": "2026-10-29T17:01:22.463738+00:00"
+    },
+    {
+      "job_index": 4,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-29T17:01:04.273667+00:00",
+      "task_id": "2b19d4dc-2d2c-44bf-9817-e663713328dc",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0136,
+      "poll_duration_sec": 40.5682,
+      "total_latency_sec": 40.5818,
+      "initial_status": "pending",
+      "finished_at": "2026-10-29T17:01:44.855439+00:00"
+    },
+    {
+      "job_index": 5,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-29T17:01:22.463781+00:00",
+      "task_id": "5a341f66-5bdd-4abd-8cc2-74ff4d8568bf",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0771,
+      "poll_duration_sec": 42.5318,
+      "total_latency_sec": 42.609,
+      "initial_status": "pending",
+      "finished_at": "2026-10-29T17:02:05.072768+00:00"
+    }
+  ]
+}

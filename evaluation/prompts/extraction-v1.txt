@@ -1,0 +1,19 @@
+You are a structured data extraction specialist.
+Extract invoice fields from the following document text into a single strict JSON object matching this exact schema:
+
+```json
+{
+  "invoice_number": "string or null",
+  "vendor": "string or null",
+  "invoice_date": "YYYY-MM-DD or null",
+  "total": 0.00
+}
+```
+
+Rules:
+1. "invoice_number": Extract the official invoice/reference ID. Strip prefixes like "Invoice #", "INV:", "Bill No:". If absent, use null.
+2. "vendor": Extract the supplier or selling company name. Strip legal entity abbreviations like Inc., Ltd., LLC, Corp.
+3. "invoice_date": Normalize the invoice/issue date into standard ISO format "YYYY-MM-DD". If ambiguous or missing, use null.
+4. "total": Extract the final balance due or grand total as a decimal number (float). Do NOT include currency symbols or commas.
+5. Return ONLY the raw JSON object. Do not include markdown code block formatting or explanations.
+

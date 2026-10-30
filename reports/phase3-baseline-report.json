@@ -1,0 +1,51 @@
+{
+  "report_name": "Phase 3 Worker Scaling Baseline Comparison",
+  "generated_at": "2026-10-29T17:05:00Z",
+  "test_parameters": {
+    "sample_url": "https://arxiv.org/pdf/2501.17887",
+    "jobs_per_run": 5,
+    "concurrency_limit": 2,
+    "format": "md"
+  },
+  "comparison": {
+    "1-worker": {
+      "jobs_submitted": 5,
+      "jobs_completed": 5,
+      "jobs_failed": 0,
+      "success_rate_pct": 100.0,
+      "wall_time_sec": 101.32,
+      "jobs_per_minute": 2.96,
+      "latency_p50_sec": 40.52,
+      "latency_p95_sec": 42.20,
+      "latency_min_sec": 18.28,
+      "latency_max_sec": 42.61,
+      "queue_depth_end": 0,
+      "worker_restarts": 0,
+      "worker_memory_usage": "1.384GiB",
+      "api_memory_usage": "707.7MiB"
+    },
+    "2-workers": {
+      "jobs_submitted": 5,
+      "jobs_completed": 5,
+      "jobs_failed": 0,
+      "success_rate_pct": 100.0,
+      "wall_time_sec": 95.55,
+      "jobs_per_minute": 3.14,
+      "latency_p50_sec": 34.43,
+      "latency_p95_sec": 44.51,
+      "latency_min_sec": 20.25,
+      "latency_max_sec": 44.99,
+      "queue_depth_end": 0,
+      "worker_restarts": 0,
+      "worker_memory_usage": "Worker 1: 1.194GiB, Worker 2: 1.425GiB",
+      "api_memory_usage": "655.1MiB"
+    }
+  },
+  "delta_analysis": {
+    "wall_time_improvement_pct": 5.7,
+    "throughput_improvement_pct": 6.1,
+    "p50_latency_improvement_sec": 6.09,
+    "memory_overhead_total": "+1.235GiB (added worker 2)"
+  }
+}
+

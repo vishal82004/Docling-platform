@@ -1,0 +1,55 @@
+﻿{
+    "TestName":  "Phase 2 - Step 2.7: Test Worker Failure",
+    "ExecutionTimestamp":  "2026-10-29T22:09:37.1559382+05:30",
+    "TotalElapsedSeconds":  98.4,
+    "ApiHealthAfterStop":  {
+                               "status":  "ok"
+                           },
+    "ApiLatencyMs":  82,
+    "QueueLenAfterSubmit":  "3",
+    "QueueLenWhileStopped":  "3",
+    "WorkerStopTime":  "2026-10-29T22:07:58.7323579+05:30",
+    "WorkerRestartTime":  "2026-10-29T22:08:23.2143352+05:30",
+    "TasksSummary":  [
+                         {
+                             "Index":  1,
+                             "TaskId":  "b3a88165-98ba-41f8-a5ee-01256c5ee6d5",
+                             "InitialStatus":  "pending",
+                             "StatusAtStop":  "started",
+                             "FinalStatus":  "failure",
+                             "ErrorMessage":  "Worker heartbeat expired: worker pod likely killed mid-job"
+                         },
+                         {
+                             "Index":  2,
+                             "TaskId":  "8bc27fa9-3ef8-4563-bf1c-8f010813cb65",
+                             "InitialStatus":  "pending",
+                             "StatusAtStop":  "started",
+                             "FinalStatus":  "success",
+                             "ErrorMessage":  null
+                         },
+                         {
+                             "Index":  3,
+                             "TaskId":  "f51c8f0a-b282-45b2-a5c7-6c389af5e128",
+                             "InitialStatus":  "pending",
+                             "StatusAtStop":  "pending",
+                             "FinalStatus":  "success",
+                             "ErrorMessage":  null
+                         },
+                         {
+                             "Index":  4,
+                             "TaskId":  "dde4b30e-02a7-4183-b608-0a91b7f30392",
+                             "InitialStatus":  "pending",
+                             "StatusAtStop":  "pending",
+                             "FinalStatus":  "success",
+                             "ErrorMessage":  null
+                         },
+                         {
+                             "Index":  5,
+                             "TaskId":  "c1b150d9-8f0b-4847-945f-cac4b08cbddd",
+                             "InitialStatus":  "pending",
+                             "StatusAtStop":  "pending",
+                             "FinalStatus":  "success",
+                             "ErrorMessage":  null
+                         }
+                     ]
+}

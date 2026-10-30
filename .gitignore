@@ -1,0 +1,53 @@
+# =====================================================================
+# Repository Hygiene & Secrets Exclusion (.gitignore)
+# =====================================================================
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ruff_cache/
+
+# Local MLflow Data & Registries (audit artifacts kept in evaluation/reports)
+mlruns/
+mlartifacts/
+mlflow.db
+mlflow.db-shm
+mlflow.db-wal
+
+# Secrets & Environment Variables
+.env
+.env.*
+*.pem
+*.key
+*.cert
+*.pfx
+secrets/
+credentials.json
+
+# Local Docker Volume Data & Temporary Caches
+redis-data/
+*.tmp
+scratch/
+script.ps1
+
+# Terraform Local State (Never commit state files with cloud metadata)
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/*.tfvars
+infra/terraform/*.tfvars.json
+
+# OS Specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini

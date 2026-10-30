@@ -1,0 +1,27 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+exclude = [
+    ".venv",
+    "mlruns",
+    "mlartifacts",
+    "reports",
+    "scratch"
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+]
+ignore = [
+    "E501", # line too long (formatted by ruff format)
+    "W291", # trailing whitespace in multiline markdown strings
+    "E402", # module level import after sys.path insertion in scripts
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
