@@ -215,7 +215,7 @@ Open `http://127.0.0.1:5000` to inspect experiment metrics, accuracy comparisons
 | **Phase 5** | CI/CD & Repository Hygiene | ✅ Completed | Ruff linting, test reorganization, `.github/workflows/ci.yml`, runbooks |
 | **Phase 6** | Kubernetes & Terraform | ✅ Completed (IaC & K8s) | Validated Terraform AKS modules, K8s manifests & runbooks |
 | **Phase 7** | Observability & Telemetry | ✅ Completed | Prometheus scraping, Grafana dashboards, 5 alert rules, SLOs, runbooks |
-| **Phase 8** | KEDA Autoscaling | ⏳ Next | Event-driven scaling on `rq:queue:convert` with scale-to-zero |
-| **Phase 9** | Optional Model Serving | ⏳ Optional | KServe / vLLM inference integration |
+| **Phase 8** | KEDA Autoscaling | ✅ Completed (Authored & Validated) | KEDA ScaledObjects (1-5 dynamic & scale-to-zero), benchmarks, runbook |
+| **Phase 9** | Optional Model Serving | ⏳ Next | Pretrained LLM extraction serving evaluation |
 | **Phase 10** | Portfolio Packaging | ⏳ Final | Runbooks, tear-down guides, and project walkthrough |
 

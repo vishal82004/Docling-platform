@@ -1,0 +1,46 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: docling-worker-scaler
+  namespace: docling-platform
+  labels:
+    app.kubernetes.io/name: docling-worker-scaler
+    app.kubernetes.io/component: autoscaler
+    app.kubernetes.io/part-of: elastic-document-intelligence
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: docling-worker
+  minReplicaCount: 1
+  maxReplicaCount: 5
+  pollingInterval: 5
+  cooldownPeriod: 60
+  advanced:
+    restoreToOriginalReplicaCount: false
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+            - type: Percent
+              value: 100
+              periodSeconds: 15
+            - type: Pods
+              value: 2
+              periodSeconds: 15
+          selectPolicy: Max
+        scaleDown:
+          stabilizationWindowSeconds: 60
+          policies:
+            - type: Pods
+              value: 1
+              periodSeconds: 30
+          selectPolicy: Min
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.docling-platform.svc.cluster.local:6379
+        listName: rq:queue:convert
+        listLength: "2"
+        activationListLength: "0"

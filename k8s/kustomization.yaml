@@ -8,4 +8,5 @@ resources:
   - docling-api.yaml
   - docling-worker.yaml
   - mlflow.yaml
+  - keda-scaledobject.yaml
 

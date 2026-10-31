@@ -73,3 +73,4 @@ Before configuring autoscaling (Phase 8), static worker benchmarks established t
 - **Budget Burn Actions:**
   - **Burn Rate > 2x:** SRE team notified; investigate worker logs via [`docs/runbooks/conversions_failing.md`](file:///c:/Users/vishal/docling-platform-local/docs/runbooks/conversions_failing.md).
   - **Burn Rate > 5x / Error Budget Exhausted:** Deployment freeze on candidate prompt / model updates until reliability returns to SLO compliance.
+

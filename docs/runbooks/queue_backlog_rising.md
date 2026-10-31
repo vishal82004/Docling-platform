@@ -97,3 +97,4 @@ docker compose exec redis redis-cli INFO stats
    python scripts/smoke_test.py
    ```
 4. Record the root cause (traffic spike, worker crash, or stuck document) in the post-mortem log.
+

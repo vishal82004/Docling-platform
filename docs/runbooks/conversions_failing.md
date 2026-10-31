@@ -84,3 +84,4 @@ docker compose exec redis redis-cli ping
    ```
    Confirm all 5 return `SUCCESS`.
 3. Check MLflow Traces dashboard at `http://localhost:5000/` to ensure new conversion spans complete with status `SUCCESS`.
+
