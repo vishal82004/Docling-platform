@@ -1,0 +1,9 @@
+# Example Terraform variables for Docling Platform AKS Deployment
+environment         = "dev"
+location            = "eastus"
+resource_group_name = "rg-docling-platform-dev"
+cluster_name        = "aks-docling-platform-dev"
+dns_prefix          = "docling-platform"
+node_count          = 2
+vm_size             = "Standard_D2s_v5"
+

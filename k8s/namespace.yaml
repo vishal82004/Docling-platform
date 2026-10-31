@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: docling-platform
+  labels:
+    app.kubernetes.io/name: docling-platform
+    app.kubernetes.io/part-of: elastic-document-intelligence

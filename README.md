@@ -196,8 +196,8 @@ Open `http://127.0.0.1:5000` to inspect experiment metrics, accuracy comparisons
 | **Phase 3** | Automated tests & load generator | ✅ Completed | `scripts/client.py`, `submit_batch.py`, 1-worker vs 2-workers benchmark |
 | **Phase 4** | MLOps evaluation & MLflow | ✅ Completed | `invoice-eval-v1` dataset, `evaluate.py`, 97% accuracy, MLflow runs |
 | **Phase 5** | CI/CD & Repository Hygiene | ✅ Completed | Ruff linting, test reorganization, `.github/workflows/ci.yml`, runbooks |
-| **Phase 6** | Kubernetes & Terraform | ⏳ Next | Declarative Azure AKS cluster via Terraform |
-| **Phase 7** | Observability & Telemetry | ⏳ Scheduled | Prometheus exporter, Grafana dashboards, OpenTelemetry |
+| **Phase 6** | Kubernetes & Terraform | ✅ Completed (IaC & K8s) | Validated Terraform AKS modules, K8s manifests & runbooks |
+| **Phase 7** | Observability & Telemetry | ⏳ Next | Prometheus exporter, Grafana dashboards, OpenTelemetry |
 | **Phase 8** | KEDA Autoscaling | ⏳ Scheduled | Event-driven scaling on `rq:queue:convert` with scale-to-zero |
 | **Phase 9** | Optional Model Serving | ⏳ Optional | KServe / vLLM inference integration |
 | **Phase 10** | Portfolio Packaging | ⏳ Final | Runbooks, tear-down guides, and project walkthrough |

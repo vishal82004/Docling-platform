@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docling-worker
+  namespace: docling-platform
+  labels:
+    app.kubernetes.io/name: docling-worker
+    app.kubernetes.io/component: conversion-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: docling-worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: docling-worker
+        app.kubernetes.io/component: conversion-worker
+    spec:
+      containers:
+        - name: docling-worker
+          image: quay.io/docling-project/docling-serve:latest
+          command: ["docling-serve", "rq-worker"]
+          envFrom:
+            - configMapRef:
+                name: docling-config
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1.2Gi
+            limits:
+              cpu: 2000m
+              memory: 2.5Gi
