@@ -155,11 +155,23 @@ py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements-dev.txt
 
-# Run automated smoke test
+# Run automated smoke test (also logged to MLflow Traces)
 python scripts/smoke_test.py
 ```
 
-### 3. Run Unit and Integration Tests
+### 3. Convert Documents with Live MLflow Tracing
+Convert any document (online URL or local file) and automatically inspect its execution span and converted content in MLflow:
+```powershell
+# Convert a document via URL
+python scripts/convert.py "https://arxiv.org/pdf/2501.17887"
+
+# Or convert a local file and save the markdown output
+python scripts/convert.py path/to/document.pdf -o output/converted.md
+```
+Open **[http://localhost:5000/](http://localhost:5000/)** and click the **"Traces"** tab to inspect the conversion span, latency breakdown, and converted markdown preview.
+
+### 4. Run Unit and Integration Tests
+
 ```powershell
 # Run fast isolated unit tests
 pytest tests/unit -v

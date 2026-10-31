@@ -23,9 +23,31 @@ if str(SCRIPT_DIR) not in sys.path:
 
 from client import DoclingClient, TaskFailedError
 
+try:
+    import mlflow
+
+    MLFLOW_AVAILABLE = True
+except ImportError:
+    MLFLOW_AVAILABLE = False
+
 DEFAULT_BASE_URL = os.environ.get("DOCLING_BASE_URL", "http://127.0.0.1:5001")
 DEFAULT_SAMPLE_URL = "https://arxiv.org/pdf/2501.17887"
 DEFAULT_REPORT_PATH = PROJECT_ROOT / "reports" / "phase3-smoke-test.json"
+
+
+def _check_local_mlflow() -> str | None:
+    """Check if local MLflow server is reachable."""
+    if not MLFLOW_AVAILABLE:
+        return None
+    try:
+        import urllib.request
+
+        with urllib.request.urlopen("http://127.0.0.1:5000/health", timeout=0.5) as resp:
+            if resp.status == 200:
+                return "http://127.0.0.1:5000"
+    except Exception:
+        pass
+    return None
 
 
 def run_smoke_test(
@@ -39,6 +61,17 @@ def run_smoke_test(
     client = DoclingClient(base_url=base_url)
     started_at = datetime.datetime.now(datetime.timezone.utc)
     overall_start = time.perf_counter()
+
+    mlflow_uri = _check_local_mlflow()
+    span = None
+    if mlflow_uri and hasattr(mlflow, "start_span"):
+        try:
+            mlflow.set_tracking_uri(mlflow_uri)
+            mlflow.set_experiment("docling-smoke-tests")
+            span = mlflow.start_span(name="docling_smoke_test")
+            span.set_inputs({"sample_url": sample_url, "base_url": base_url})
+        except Exception:
+            span = None
 
     report = {
         "test_name": "phase3_smoke_test",
@@ -122,6 +155,21 @@ def run_smoke_test(
         overall_elapsed = time.perf_counter() - overall_start
         report["elapsed_seconds"] = round(overall_elapsed, 4)
         report["finished_at"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+        if span:
+            try:
+                span.set_outputs(
+                    {
+                        "success": report["success"],
+                        "elapsed_seconds": report["elapsed_seconds"],
+                        "task_id": report["steps"].get("submission", {}).get("task_id"),
+                        "error": report.get("error"),
+                    }
+                )
+                span.end()
+                print(f"[MLflow] Logged smoke test trace to {mlflow_uri} (Experiment: docling-smoke-tests)")
+            except Exception:
+                pass
 
         report_path.parent.mkdir(parents=True, exist_ok=True)
         with open(report_path, "w", encoding="utf-8") as f:

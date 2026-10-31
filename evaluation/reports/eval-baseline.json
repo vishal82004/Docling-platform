@@ -3,9 +3,9 @@
   "candidate": "baseline",
   "prompt_version": "extraction-v1",
   "dataset_version": "invoice-eval-v1",
-  "timestamp": "2026-10-31T10:00:33.338586+00:00",
+  "timestamp": "2026-10-31T10:10:08.780093+00:00",
   "total_documents": 25,
-  "total_elapsed_seconds": 0.6441,
+  "total_elapsed_seconds": 0.7372,
   "metrics": {
     "overall_field_accuracy": 0.97,
     "exact_match_rate": 0.88,
@@ -18,11 +18,11 @@
       "total": 1.0
     },
     "latency": {
-      "avg_sec": 0.0156,
-      "p50_sec": 0.0155,
-      "p95_sec": 0.0163,
-      "min_sec": 0.0152,
-      "max_sec": 0.0167
+      "avg_sec": 0.0288,
+      "p50_sec": 0.0162,
+      "p95_sec": 0.0167,
+      "min_sec": 0.0157,
+      "max_sec": 0.3313
     }
   },
   "quality_gate": {
@@ -50,7 +50,7 @@
       },
       "max_p95_latency_sec": {
         "target": 5.0,
-        "actual": 0.0163,
+        "actual": 0.0167,
         "passed": true
       }
     }

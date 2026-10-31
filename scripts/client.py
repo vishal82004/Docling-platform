@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import time
+from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import requests
@@ -109,3 +110,60 @@ class DoclingClient:
         resp = self.session.get(url, timeout=timeout)
         resp.raise_for_status()
         return resp.json()
+
+    def submit_file_async(
+        self,
+        file_path: str | Path,
+        to_formats: Optional[List[str]] = None,
+        timeout: float = 30.0,
+    ) -> Dict[str, Any]:
+        """Submit an asynchronous conversion job for a local file."""
+        p = Path(file_path)
+        if not p.exists():
+            raise FileNotFoundError(f"File not found: {p}")
+        url = f"{self.base_url}/v1/convert/file/async"
+        if to_formats is None:
+            to_formats = ["md"]
+        with open(p, "rb") as f:
+            files = [("files", (p.name, f, "application/octet-stream"))]
+            data = {"to_formats": to_formats}
+            resp = self.session.post(url, files=files, data=data, timeout=timeout)
+        resp.raise_for_status()
+        res = resp.json()
+        if not res.get("task_id"):
+            raise DoclingClientError(f"No task_id returned in response: {res}")
+        return res
+
+    def convert(
+        self,
+        source: str | Path,
+        to_formats: Optional[List[str]] = None,
+        timeout: float = 300.0,
+        poll_interval: float = 2.0,
+    ) -> Dict[str, Any]:
+        """
+        High-level helper: accepts URL or local file path, submits async job,
+        polls until completion, and returns the full result payload.
+        """
+        if to_formats is None:
+            to_formats = ["md"]
+
+        source_str = str(source)
+        is_url = source_str.startswith("http://") or source_str.startswith("https://")
+
+        if is_url:
+            payload = self.build_url_payload(source_str, to_formats=to_formats)
+            submission = self.submit_async(payload)
+        else:
+            submission = self.submit_file_async(source, to_formats=to_formats)
+
+        task_id = submission["task_id"]
+        status_data = self.wait_for_completion(
+            task_id=task_id, timeout=timeout, poll_interval=poll_interval, fail_on_error=True
+        )
+        result_data = self.get_result(task_id)
+        return {
+            "task_id": task_id,
+            "status": status_data.get("task_status", "success"),
+            "result": result_data,
+        }
