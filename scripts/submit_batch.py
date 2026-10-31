@@ -276,7 +276,9 @@ def run_batch(
 
 def main():
     parser = argparse.ArgumentParser(description="Docling Serve Batch Load Runner")
-    parser.add_argument("-n", "--jobs", type=int, default=5, help="Total number of jobs to run")
+    parser.add_argument(
+        "-n", "--jobs", "--num-docs", dest="jobs", type=int, default=5, help="Total number of jobs to run"
+    )
     parser.add_argument("-c", "--concurrency", type=int, default=2, help="Concurrency limit for in-flight jobs")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Base API URL")
     parser.add_argument(

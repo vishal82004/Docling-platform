@@ -3,9 +3,9 @@
   "candidate": "flawed",
   "prompt_version": "extraction-flawed",
   "dataset_version": "invoice-eval-v1",
-  "timestamp": "2026-10-30T06:12:33.005651+00:00",
+  "timestamp": "2026-10-31T10:00:43.322662+00:00",
   "total_documents": 25,
-  "total_elapsed_seconds": 0.2829,
+  "total_elapsed_seconds": 0.2693,
   "metrics": {
     "overall_field_accuracy": 0.25,
     "exact_match_rate": 0.0,
@@ -19,7 +19,7 @@
     },
     "latency": {
       "avg_sec": 0.0103,
-      "p50_sec": 0.0102,
+      "p50_sec": 0.0103,
       "p95_sec": 0.0106,
       "min_sec": 0.0101,
       "max_sec": 0.0106

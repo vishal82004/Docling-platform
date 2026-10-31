@@ -9,7 +9,7 @@
       "invoice_date": false,
       "total": true
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "INVOICE",
@@ -34,7 +34,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0102,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "COMMERCIAL INVOICE",
@@ -59,7 +59,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0105,
+    "latency_sec": 0.0104,
     "extracted": {
       "invoice": null,
       "vendor": "Nexus Office Solutions LLC",
@@ -84,7 +84,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0102,
+    "latency_sec": 0.0106,
     "extracted": {
       "invoice": null,
       "vendor": "VERTEX DATA SYSTEMS",
@@ -109,7 +109,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0106,
     "extracted": {
       "invoice": null,
       "vendor": "SUMMIT HARDWARE CORP.",
@@ -134,7 +134,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0106,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "QUANTUM ENERGY SERVICES Ltd",
@@ -159,7 +159,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0102,
+    "latency_sec": 0.0101,
     "extracted": {
       "invoice": null,
       "vendor": "Horizon Media Group LLC",
@@ -184,7 +184,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0103,
+    "latency_sec": 0.0106,
     "extracted": {
       "invoice": null,
       "vendor": "IRONCLAD SECURITY TECHNOLOGIES Inc.",
@@ -209,7 +209,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "BlueSky Catering Ltd.",
@@ -234,7 +234,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0103,
+    "latency_sec": 0.0104,
     "extracted": {
       "invoice": null,
       "vendor": "PIONEER FREIGHT & TRANSPORT",
@@ -309,7 +309,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0105,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "Beacon Electrical Works Ltd",
@@ -359,7 +359,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0106,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "Evergreen Facility Maintenance Inc.",
@@ -384,7 +384,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0102,
+    "latency_sec": 0.0105,
     "extracted": {
       "invoice": null,
       "vendor": "HELIOS SOLAR SYSTEMS INC.",
@@ -409,7 +409,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0102,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "Zenith Medical Supplies Corp.",
@@ -434,7 +434,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0106,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "ATLAS HEAVY EQUIPMENT LLC",
@@ -459,7 +459,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "Velocity Internet Services",
@@ -484,7 +484,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0106,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "Sterling Print & Design LLC",
@@ -509,7 +509,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0104,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "Order Receipt",
@@ -534,7 +534,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "APEX SOFTWARE LABS Inc.",
@@ -559,7 +559,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0105,
+    "latency_sec": 0.0102,
     "extracted": {
       "invoice": null,
       "vendor": "KROMER AUTOMOTIVE GMBH",
@@ -584,7 +584,7 @@
       "invoice_date": true,
       "total": false
     },
-    "latency_sec": 0.0101,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "QuickFix Plumbing Co.",
@@ -609,7 +609,7 @@
       "invoice_date": false,
       "total": false
     },
-    "latency_sec": 0.0105,
+    "latency_sec": 0.0103,
     "extracted": {
       "invoice": null,
       "vendor": "TITAN HEAVY INDUSTRIES LTD.",

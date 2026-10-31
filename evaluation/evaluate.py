@@ -36,6 +36,24 @@ DEFAULT_DATASET_DIR = EVAL_DIR / "dataset" / "invoice-eval-v1"
 DEFAULT_REPORTS_DIR = EVAL_DIR / "reports"
 
 
+def resolve_mlflow_tracking_uri(explicit_uri: Optional[str] = None) -> Optional[str]:
+    """Resolve MLflow tracking URI: explicit argument > env var > local container > None (local ./mlruns)."""
+    if explicit_uri:
+        return explicit_uri
+    if os.environ.get("MLFLOW_TRACKING_URI"):
+        return os.environ["MLFLOW_TRACKING_URI"]
+    # Check if local MLflow server container is running on port 5000
+    try:
+        import urllib.request
+
+        with urllib.request.urlopen("http://127.0.0.1:5000/health", timeout=0.5) as resp:
+            if resp.status == 200:
+                return "http://127.0.0.1:5000"
+    except Exception:
+        pass
+    return None
+
+
 # =====================================================================
 # 1. Normalization & Comparison Helpers
 # =====================================================================
@@ -365,6 +383,7 @@ def run_evaluation(
     max_failure_rate: float = 0.05,
     max_p95_latency: float = 5.0,
     experiment_name: str = "docling-invoice-extraction",
+    tracking_uri: Optional[str] = None,
 ) -> Tuple[Dict[str, Any], bool]:
     """
     Run evaluation across all documents, compute metrics, log to MLflow,
@@ -550,6 +569,9 @@ def run_evaluation(
     # MLflow Tracking
     if MLFLOW_AVAILABLE:
         try:
+            resolved_uri = resolve_mlflow_tracking_uri(tracking_uri)
+            if resolved_uri:
+                mlflow.set_tracking_uri(resolved_uri)
             mlflow.set_experiment(experiment_name)
             with mlflow.start_run(run_name=f"{candidate}-{prompt_version}"):
                 # Log Params
@@ -572,7 +594,8 @@ def run_evaluation(
                 # Log Artifacts
                 mlflow.log_artifact(str(report_file))
                 mlflow.log_artifact(str(errors_file))
-                print(f"[MLflow] Successfully logged run to experiment '{experiment_name}'.")
+                current_uri = mlflow.get_tracking_uri()
+                print(f"[MLflow] Successfully logged run to experiment '{experiment_name}' at {current_uri}.")
         except Exception as mlf_err:
             print(f"[MLflow WARN] Failed to log to MLflow: {mlf_err}")
 
@@ -611,6 +634,11 @@ def main():
     parser.add_argument("--max-failure-rate", type=float, default=0.05, help="Gate: Max failure rate")
     parser.add_argument("--max-p95-latency", type=float, default=5.0, help="Gate: Max p95 latency in seconds")
     parser.add_argument("--experiment-name", default="docling-invoice-extraction", help="MLflow experiment name")
+    parser.add_argument(
+        "--tracking-uri",
+        default=None,
+        help="MLflow tracking server URI (defaults to http://127.0.0.1:5000 if running, else local ./mlruns)",
+    )
 
     args = parser.parse_args()
 
@@ -624,6 +652,7 @@ def main():
         max_failure_rate=args.max_failure_rate,
         max_p95_latency=args.max_p95_latency,
         experiment_name=args.experiment_name,
+        tracking_uri=args.tracking_uri,
     )
 
     if not passed:

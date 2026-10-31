@@ -1,28 +1,28 @@
 {
   "test_name": "phase3_smoke_test",
-  "started_at": "2026-10-29T16:57:08.568786+00:00",
+  "started_at": "2026-10-31T09:52:16.366874+00:00",
   "base_url": "http://127.0.0.1:5001",
   "sample_url": "https://arxiv.org/pdf/2501.17887",
   "steps": {
     "health_check": {
       "status": "passed",
-      "latency_seconds": 0.0176,
+      "latency_seconds": 0.3147,
       "response": {
         "status": "ok"
       }
     },
     "submission": {
       "status": "passed",
-      "latency_seconds": 0.0495,
-      "task_id": "ea47cb96-3faf-4ad4-86a4-ba8beda576de",
+      "latency_seconds": 0.2089,
+      "task_id": "3f9d9c28-b7f9-48ac-94a0-92887c16b432",
       "initial_status": "pending"
     },
     "polling": {
       "status": "passed",
-      "polling_duration_seconds": 24.2946,
+      "polling_duration_seconds": 22.1712,
       "final_task_status": "success",
       "status_response": {
-        "task_id": "ea47cb96-3faf-4ad4-86a4-ba8beda576de",
+        "task_id": "3f9d9c28-b7f9-48ac-94a0-92887c16b432",
         "task_type": "convert",
         "task_status": "success",
         "task_position": null,
@@ -39,12 +39,12 @@
     },
     "result_retrieval": {
       "status": "passed",
-      "latency_seconds": 0.0294,
+      "latency_seconds": 0.0123,
       "documents_count": 0
     }
   },
   "success": true,
-  "elapsed_seconds": 24.3913,
+  "elapsed_seconds": 22.7082,
   "error": null,
-  "finished_at": "2026-10-29T16:57:32.960112+00:00"
+  "finished_at": "2026-10-31T09:52:39.075076+00:00"
 }

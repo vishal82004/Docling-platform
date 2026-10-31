@@ -1,0 +1,165 @@
+{
+  "worker_label": "default-workers",
+  "batch_start": "2026-10-31T10:00:53.670535+00:00",
+  "batch_end": "2026-10-31T10:02:13.592322+00:00",
+  "total_jobs_requested": 5,
+  "total_jobs_submitted": 5,
+  "concurrency": 2,
+  "circuit_broken": false,
+  "elapsed_seconds": 76.85,
+  "jobs_per_minute": 3.9,
+  "summary": {
+    "submitted": 5,
+    "succeeded": 5,
+    "failed": 0,
+    "success_rate_percent": 100.0,
+    "latency_percentiles_sec": {
+      "min": 14.173,
+      "max": 32.388,
+      "avg": 27.51,
+      "p50": 30.326,
+      "p95": 31.985
+    }
+  },
+  "queue": {
+    "initial_depth": 0,
+    "final_depth": 0
+  },
+  "docker_stats": {
+    "initial": [
+      {
+        "name": "docling-platform-local-docling-api-1",
+        "cpu_percent": "0.11%",
+        "mem_usage": "708.1MiB / 7.616GiB",
+        "mem_percent": "9.08%",
+        "net_io": "410kB / 257kB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-mlflow-1",
+        "cpu_percent": "1.43%",
+        "mem_usage": "2.301GiB / 7.616GiB",
+        "mem_percent": "30.21%",
+        "net_io": "409kB / 7.79MB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-docling-worker-1",
+        "cpu_percent": "0.01%",
+        "mem_usage": "1.488GiB / 7.616GiB",
+        "mem_percent": "19.54%",
+        "net_io": "1.9MB / 196kB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-redis-1",
+        "cpu_percent": "0.32%",
+        "mem_usage": "16.18MiB / 7.616GiB",
+        "mem_percent": "0.21%",
+        "net_io": "286kB / 421kB",
+        "block_io": "0B / 0B"
+      }
+    ],
+    "final": [
+      {
+        "name": "docling-platform-local-docling-api-1",
+        "cpu_percent": "0.11%",
+        "mem_usage": "706.2MiB / 7.616GiB",
+        "mem_percent": "9.05%",
+        "net_io": "1.39MB / 520kB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-mlflow-1",
+        "cpu_percent": "1.56%",
+        "mem_usage": "2.301GiB / 7.616GiB",
+        "mem_percent": "30.21%",
+        "net_io": "409kB / 7.79MB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-docling-worker-1",
+        "cpu_percent": "0.01%",
+        "mem_usage": "1.493GiB / 7.616GiB",
+        "mem_percent": "19.60%",
+        "net_io": "5.05MB / 506kB",
+        "block_io": "0B / 0B"
+      },
+      {
+        "name": "docling-platform-local-redis-1",
+        "cpu_percent": "0.34%",
+        "mem_usage": "16.7MiB / 7.616GiB",
+        "mem_percent": "0.21%",
+        "net_io": "752kB / 1.39MB",
+        "block_io": "0B / 0B"
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "job_index": 1,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-31T10:00:53.671994+00:00",
+      "task_id": "13be3e32-f7f9-4c2f-a1c5-97e0bc46991c",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0161,
+      "poll_duration_sec": 14.157,
+      "total_latency_sec": 14.1731,
+      "initial_status": "pending",
+      "finished_at": "2026-10-31T10:01:07.845144+00:00"
+    },
+    {
+      "job_index": 2,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-31T10:00:53.672583+00:00",
+      "task_id": "bfdceac2-a963-4ea1-a0ff-1f40261feb26",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0205,
+      "poll_duration_sec": 30.352,
+      "total_latency_sec": 30.3726,
+      "initial_status": "pending",
+      "finished_at": "2026-10-31T10:01:24.045160+00:00"
+    },
+    {
+      "job_index": 3,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-31T10:01:07.845212+00:00",
+      "task_id": "bb68af74-3b64-4edd-8093-883f4f736ad0",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0102,
+      "poll_duration_sec": 32.3778,
+      "total_latency_sec": 32.3881,
+      "initial_status": "pending",
+      "finished_at": "2026-10-31T10:01:40.233270+00:00"
+    },
+    {
+      "job_index": 4,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-31T10:01:24.045201+00:00",
+      "task_id": "17e502e1-c478-44d0-8ab8-04fd297eac5f",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.0082,
+      "poll_duration_sec": 30.3174,
+      "total_latency_sec": 30.3256,
+      "initial_status": "pending",
+      "finished_at": "2026-10-31T10:01:54.370806+00:00"
+    },
+    {
+      "job_index": 5,
+      "sample_url": "https://arxiv.org/pdf/2501.17887",
+      "submitted_at": "2026-10-31T10:01:40.233306+00:00",
+      "task_id": "82b096b4-7140-4532-82ad-6383bccb7e6b",
+      "status": "success",
+      "error": null,
+      "submit_latency_sec": 0.024,
+      "poll_duration_sec": 30.2665,
+      "total_latency_sec": 30.2905,
+      "initial_status": "pending",
+      "finished_at": "2026-10-31T10:02:10.523830+00:00"
+    }
+  ]
+}
