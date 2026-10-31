@@ -146,7 +146,9 @@ docker compose ps
 The services are exposed and immediately accessible:
 - **Docling Serve Web UI:** [http://localhost:5001/](http://localhost:5001/)
 - **Docling Interactive API Docs (Swagger):** [http://localhost:5001/docs](http://localhost:5001/docs)
-- **MLflow Experiment Tracking UI:** [http://localhost:5000/](http://localhost:5000/)
+- **MLflow Experiment Tracking & Live Traces:** [http://localhost:5000/](http://localhost:5000/)
+- **Grafana Operational Dashboard:** [http://localhost:3000/](http://localhost:3000/) *(Login: `admin` / `admin`)*
+- **Prometheus Metrics & Alerts Engine:** [http://localhost:9090/](http://localhost:9090/)
 
 ### 2. Run the End-to-End Smoke Test
 ```powershell
@@ -212,8 +214,8 @@ Open `http://127.0.0.1:5000` to inspect experiment metrics, accuracy comparisons
 | **Phase 4** | MLOps evaluation & MLflow | ✅ Completed | `invoice-eval-v1` dataset, `evaluate.py`, 97% accuracy, MLflow runs |
 | **Phase 5** | CI/CD & Repository Hygiene | ✅ Completed | Ruff linting, test reorganization, `.github/workflows/ci.yml`, runbooks |
 | **Phase 6** | Kubernetes & Terraform | ✅ Completed (IaC & K8s) | Validated Terraform AKS modules, K8s manifests & runbooks |
-| **Phase 7** | Observability & Telemetry | ⏳ Next | Prometheus exporter, Grafana dashboards, OpenTelemetry |
-| **Phase 8** | KEDA Autoscaling | ⏳ Scheduled | Event-driven scaling on `rq:queue:convert` with scale-to-zero |
+| **Phase 7** | Observability & Telemetry | ✅ Completed | Prometheus scraping, Grafana dashboards, 5 alert rules, SLOs, runbooks |
+| **Phase 8** | KEDA Autoscaling | ⏳ Next | Event-driven scaling on `rq:queue:convert` with scale-to-zero |
 | **Phase 9** | Optional Model Serving | ⏳ Optional | KServe / vLLM inference integration |
 | **Phase 10** | Portfolio Packaging | ⏳ Final | Runbooks, tear-down guides, and project walkthrough |
 

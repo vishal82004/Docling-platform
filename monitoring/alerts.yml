@@ -1,0 +1,57 @@
+groups:
+  - name: docling_platform_alerts
+    rules:
+      - alert: DoclingQueueBacklogHigh
+        expr: rq_jobs{queue="convert", status="queued"} > 5
+        for: 1m
+        labels:
+          severity: warning
+          component: queue
+        annotations:
+          summary: "Docling conversion queue backlog is rising"
+          description: "Queue depth has exceeded 5 jobs for over 1 minute (current depth: {{ $value }}). Scaling workers may be required."
+          runbook_url: "docs/runbooks/queue_backlog_rising.md"
+
+      - alert: DoclingWorkerPoolExhausted
+        expr: sum(rq_workers{queues="convert", state="idle"}) == 0 and rq_jobs{queue="convert", status="queued"} > 0
+        for: 30s
+        labels:
+          severity: warning
+          component: worker
+        annotations:
+          summary: "All Docling workers are saturated"
+          description: "No idle workers available while jobs are waiting in queue. In-flight jobs may experience latency spikes."
+          runbook_url: "docs/runbooks/queue_backlog_rising.md"
+
+      - alert: DoclingWorkerDown
+        expr: sum(rq_workers) < 1
+        for: 30s
+        labels:
+          severity: critical
+          component: worker
+        annotations:
+          summary: "No Docling workers registered"
+          description: "Zero RQ conversion workers are connected to Redis. Document conversions will stall indefinitely."
+          runbook_url: "docs/runbooks/conversions_failing.md"
+
+      - alert: DoclingConversionFailureRateHigh
+        expr: (sum(increase(rq_workers_failed_total[5m])) / (sum(increase(rq_workers_success_total[5m])) + sum(increase(rq_workers_failed_total[5m])))) > 0.05
+        for: 1m
+        labels:
+          severity: critical
+          component: pipeline
+        annotations:
+          summary: "Docling conversion failure rate exceeded 5%"
+          description: "More than 5% of conversion jobs in the last 5 minutes resulted in failure. Inspect worker error logs."
+          runbook_url: "docs/runbooks/conversions_failing.md"
+
+      - alert: DoclingHighP95ProcessingDuration
+        expr: histogram_quantile(0.95, sum(rate(docling_process_seconds_bucket[5m])) by (le)) > 45
+        for: 2m
+        labels:
+          severity: warning
+          component: latency
+        annotations:
+          summary: "Docling p95 conversion latency breached SLO (45s)"
+          description: "p95 conversion processing duration is currently {{ $value }}s, exceeding the 45-second SLO target."
+          runbook_url: "docs/slo.md"
