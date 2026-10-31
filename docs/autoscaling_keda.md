@@ -100,3 +100,4 @@ Based on our Phase 3 load testing harness (`scripts/submit_batch.py`) and queuin
 3. **Layer 3: Scale-In & Cost Optimization:**
    - Queue drains $\rightarrow$ KEDA scales worker pods back to 1.
    - Unused VM node is cordoned, drained, and deleted after 10 minutes of low utilization.
+

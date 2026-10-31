@@ -98,3 +98,4 @@ python scripts/submit_batch.py --num-docs 10 --concurrency 4
   ```yaml
   cooldownPeriod: 120 # Increase from 60 to 120 seconds
   ```
+
