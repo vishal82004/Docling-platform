@@ -54,3 +54,4 @@ Before promoting a candidate configuration from evaluation to production:
 - [ ] Docker compose configuration validates without warnings (`docker compose config`).
 - [ ] No private datasets, API keys, credentials, or `.env` files are tracked in git.
 - [ ] Last known-good rollback target is documented and available.
+

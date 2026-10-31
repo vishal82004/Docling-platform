@@ -67,3 +67,4 @@ kubectl get pods -n docling-platform -l app=docling-worker
    docker compose logs --tail 500 docling-worker > reports/failed-worker.log
    ```
 2. Archive MLflow evaluation run details and note root cause in post-mortem documentation.
+

@@ -11,7 +11,80 @@ An enterprise-ready, asynchronous document conversion and intelligence platform 
 
 ## 🏛️ System Architecture
 
-![System Architecture](docs/architecture.svg)
+```mermaid
+flowchart LR
+    classDef clientStyle fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#01579b;
+    classDef apiStyle fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#1b5e20;
+    classDef queueStyle fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#b71c1c;
+    classDef workerStyle fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#e65100;
+    classDef opsStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
+    classDef obsStyle fill:#fffde7,stroke:#fbc02d,stroke-width:2px,color:#f57f17;
+
+    subgraph Clients ["Clients & Triggers"]
+        C["Client"]:::clientStyle
+        BG["Batch Test Generator"]:::clientStyle
+    end
+
+    subgraph Ingestion ["Ingestion API"]
+        API["Docling Serve API<br/>FastAPI /docs"]:::apiStyle
+    end
+
+    subgraph QueueLayer ["Message Broker"]
+        Redis["Redis RQ Queue<br/>rq:queue:convert"]:::queueStyle
+    end
+
+    subgraph ProcessingLayer ["Scalable Compute"]
+        W1["Worker 1"]:::workerStyle
+        W2["Worker 2"]:::workerStyle
+        WN["Worker N"]:::workerStyle
+    end
+
+    subgraph OutputLayer ["Document Extraction"]
+        DOC["Converted Output<br/>Markdown / JSON"]:::apiStyle
+        LLM["Optional Pretrained LLM<br/>Structured JSON Extraction"]:::workerStyle
+    end
+
+    subgraph MLOps ["MLOps & Quality Gates"]
+        DATA["Sample Docs + GT"]:::opsStyle
+        EVAL["Evaluation Harness<br/>evaluate.py"]:::opsStyle
+        MLFLOW["MLflow Tracking"]:::opsStyle
+        GHA["GitHub Actions<br/>Quality Gate"]:::opsStyle
+    end
+
+    subgraph Platform ["Azure AKS Infrastructure"]
+        TF["Terraform"]:::opsStyle
+        KEDA["KEDA Scaler<br/>Redis List Scaler"]:::opsStyle
+        AKS["AKS Cluster Autoscaler"]:::opsStyle
+    end
+
+    subgraph Observability ["Observability & Telemetry"]
+        PROM["Prometheus Server"]:::obsStyle
+        GRAF["Grafana Dashboards"]:::obsStyle
+        OTEL["OpenTelemetry Tracing"]:::obsStyle
+    end
+
+    C --> API
+    BG --> API
+    API --> Redis
+    Redis --> W1 & W2 & WN
+    W1 & W2 & WN --> DOC
+    DOC --> LLM
+    DOC -.-> API
+
+    TF --> Platform
+    Redis -.-> KEDA
+    KEDA --> WN
+    Platform -.-> AKS
+
+    DATA --> EVAL
+    EVAL --> MLFLOW
+    EVAL --> GHA
+    GHA -.-> Platform
+
+    API & Redis & W1 & W2 & WN -.-> PROM
+    PROM --> GRAF
+    API & W1 -.-> OTEL
+```
 
 ### High-Level Components:
 - **Docling Serve API:** FastAPI service exposing `/health`, `/v1/convert/source/async`, and `/v1/status/poll/{task_id}`.
@@ -32,8 +105,6 @@ docling-platform/
 │       └── ci.yml                     # Automated CI/CD pipeline & quality gate
 ├── docs/
 │   ├── architecture.md               # Detailed system architecture specification
-│   ├── architecture.svg              # Scalable vector architecture diagram
-│   ├── architecture.jpg              # High-resolution raster diagram
 │   ├── benchmark.md                  # Phase 3 worker scaling benchmark report
 │   └── runbooks/
 │       ├── release_rules.md          # SRE release gating & promotion rules
@@ -130,3 +201,4 @@ Open `http://127.0.0.1:5000` to inspect experiment metrics, accuracy comparisons
 | **Phase 8** | KEDA Autoscaling | ⏳ Scheduled | Event-driven scaling on `rq:queue:convert` with scale-to-zero |
 | **Phase 9** | Optional Model Serving | ⏳ Optional | KServe / vLLM inference integration |
 | **Phase 10** | Portfolio Packaging | ⏳ Final | Runbooks, tear-down guides, and project walkthrough |
+

@@ -44,3 +44,4 @@ Both tests executed an identical batch of 5 jobs with concurrency limit = 2.
 2. **Resource Footprint:**
    - Each `docling-serve rq-worker` loads OCR models into memory, consuming approximately **1.2 to 1.4 GiB** of RAM per worker process.
    - Memory overhead scales linearly with worker count, validating the need for **KEDA event-driven autoscaling** in Phase 8 to scale workers to zero when the queue is idle.
+
