@@ -20,6 +20,7 @@ spec:
       containers:
         - name: mlflow
           image: ghcr.io/mlflow/mlflow:latest
+          imagePullPolicy: IfNotPresent
           command:
             - mlflow
             - server
@@ -42,16 +43,14 @@ spec:
               cpu: 500m
               memory: 1Gi
           livenessProbe:
-            httpGet:
-              path: /health
+            tcpSocket:
               port: 5000
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30
             periodSeconds: 15
           readinessProbe:
-            httpGet:
-              path: /health
+            tcpSocket:
               port: 5000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 10
           volumeMounts:
             - name: mlflow-storage
