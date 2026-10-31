@@ -414,6 +414,18 @@ def run_evaluation(
     else:
         raise ValueError(f"Unknown candidate extractor: {candidate}")
 
+    # Initialize MLflow experiment and tracking URI if available
+    mlflow_active = False
+    if MLFLOW_AVAILABLE:
+        try:
+            resolved_uri = resolve_mlflow_tracking_uri(tracking_uri)
+            if resolved_uri:
+                mlflow.set_tracking_uri(resolved_uri)
+            mlflow.set_experiment(experiment_name)
+            mlflow_active = True
+        except Exception as mlf_init_err:
+            print(f"[MLflow WARN] Failed to initialize MLflow tracking: {mlf_init_err}")
+
     print("=" * 68)
     print(f"MLOps Evaluation Run — Candidate: '{candidate}' | Dataset: {dataset_dir.name}")
     print(f"Total Evaluation Documents: {len(ground_truth_map)}")
@@ -441,7 +453,23 @@ def run_evaluation(
 
         t0 = time.perf_counter()
         try:
-            extracted_json, is_schema_valid, extract_err = extractor.extract(doc_text)
+            if mlflow_active and hasattr(mlflow, "start_span"):
+                try:
+                    with mlflow.start_span(name=f"extract_invoice_{doc_id}") as span:
+                        span.set_inputs({"doc_id": doc_id, "candidate": candidate, "text_preview": doc_text[:250]})
+                        extracted_json, is_schema_valid, extract_err = extractor.extract(doc_text)
+                        span.set_outputs(
+                            {
+                                "doc_id": doc_id,
+                                "extracted": extracted_json,
+                                "schema_valid": is_schema_valid,
+                                "error": extract_err,
+                            }
+                        )
+                except Exception:
+                    extracted_json, is_schema_valid, extract_err = extractor.extract(doc_text)
+            else:
+                extracted_json, is_schema_valid, extract_err = extractor.extract(doc_text)
             elapsed = time.perf_counter() - t0
             latencies.append(elapsed)
 
@@ -567,12 +595,8 @@ def run_evaluation(
         json.dump(errors_list, f, indent=2)
 
     # MLflow Tracking
-    if MLFLOW_AVAILABLE:
+    if mlflow_active:
         try:
-            resolved_uri = resolve_mlflow_tracking_uri(tracking_uri)
-            if resolved_uri:
-                mlflow.set_tracking_uri(resolved_uri)
-            mlflow.set_experiment(experiment_name)
             with mlflow.start_run(run_name=f"{candidate}-{prompt_version}"):
                 # Log Params
                 mlflow.log_param("candidate", candidate)
