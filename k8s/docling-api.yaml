@@ -58,7 +58,7 @@ metadata:
     app.kubernetes.io/name: docling-api
     app.kubernetes.io/component: ingestion-api
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 5001
       targetPort: 5001
@@ -66,3 +66,4 @@ spec:
       name: http
   selector:
     app.kubernetes.io/name: docling-api
+

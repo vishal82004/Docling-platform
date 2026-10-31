@@ -54,10 +54,11 @@ az aks get-credentials --resource-group rg-docling-platform-dev --name aks-docli
 
 The platform manifests reside in [`k8s/`](file:///c:/Users/vishal/docling-platform-local/k8s/):
 - `namespace.yaml`: Creates dedicated namespace `docling-platform`.
-- `configmap.yaml`: Injects Redis connection URL and queue name (`convert`).
+- `configmap.yaml`: Injects Redis connection URL and queue name (`convert`), plus UI enable flag (`DOCLING_SERVE_ENABLE_UI: "1"`).
 - `redis.yaml`: Deploys Redis 7 with private `ClusterIP` on port 6379 (never publicly exposed).
-- `docling-api.yaml`: Ingestion API deployment with liveness/readiness probes on `/health`.
+- `docling-api.yaml`: Ingestion API deployment + `LoadBalancer` service exposing the Web UI & REST API on port 5001 with liveness/readiness probes on `/health`.
 - `docling-worker.yaml`: Scalable RQ consumer pool (2 replicas baseline, 1.2Gi memory request each).
+- `mlflow.yaml`: MLflow Tracking Server deployment + `LoadBalancer` service exposing the Tracking UI on port 5000 with persistent artifact and SQLite storage.
 - `kustomization.yaml`: Bundles all manifests for atomic deployment.
 
 ### Local Syntax Verification:
@@ -77,16 +78,35 @@ kubectl get services -n docling-platform
 
 ---
 
-## 4. End-to-End Verification via Port-Forward
+## 4. Accessing Services & End-to-End Verification
 
-To verify the cluster without exposing public IPs:
+### Option A: External LoadBalancer IP (Direct Access)
+When deployed on AKS or a cloud Kubernetes cluster with cloud provider integration:
 ```powershell
-# Forward API service port locally
+kubectl get services -n docling-platform
+```
+Retrieve the `EXTERNAL-IP` assigned to `docling-api` and `mlflow`:
+- **Docling Web UI / Swagger API:** `http://<EXTERNAL-IP>:5001/` & `http://<EXTERNAL-IP>:5001/docs`
+- **MLflow Tracking Dashboard:** `http://<EXTERNAL-IP>:5000/`
+
+### Option B: Local Port-Forwarding (Private / Bastion Access)
+To verify services without creating public cloud endpoints:
+```powershell
+# Forward Docling API (Web UI & REST API)
 kubectl port-forward -n docling-platform svc/docling-api 5001:5001
 
-# Run the automated smoke test in another terminal
+# Forward MLflow Tracking UI (in another terminal)
+kubectl port-forward -n docling-platform svc/mlflow 5000:5000
+```
+- Open Docling UI: `http://localhost:5001/`
+- Open Docling Swagger Docs: `http://localhost:5001/docs`
+- Open MLflow UI: `http://localhost:5000/`
+
+### Run Smoke Test:
+```powershell
 .\.venv\Scripts\python.exe scripts\smoke_test.py
 ```
+
 
 ---
 
@@ -101,3 +121,4 @@ kubectl delete -k k8s/
 cd infra/terraform
 terraform destroy -auto-approve
 ```
+

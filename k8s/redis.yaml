@@ -67,3 +67,4 @@ spec:
       name: redis
   selector:
     app.kubernetes.io/name: redis
+

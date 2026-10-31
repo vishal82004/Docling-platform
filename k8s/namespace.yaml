@@ -5,3 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/name: docling-platform
     app.kubernetes.io/part-of: elastic-document-intelligence
+

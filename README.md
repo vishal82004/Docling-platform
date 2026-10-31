@@ -143,7 +143,10 @@ docling-platform/
 docker compose up -d
 docker compose ps
 ```
-The API is available at `http://127.0.0.1:5001` with interactive OpenAPI documentation at `http://127.0.0.1:5001/docs`.
+The services are exposed and immediately accessible:
+- **Docling Serve Web UI:** [http://localhost:5001/](http://localhost:5001/)
+- **Docling Interactive API Docs (Swagger):** [http://localhost:5001/docs](http://localhost:5001/docs)
+- **MLflow Experiment Tracking UI:** [http://localhost:5000/](http://localhost:5000/)
 
 ### 2. Run the End-to-End Smoke Test
 ```powershell

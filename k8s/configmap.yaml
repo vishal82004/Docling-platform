@@ -8,3 +8,4 @@ data:
   DOCLING_SERVE_ENG_RQ_REDIS_URL: "redis://redis.docling-platform.svc.cluster.local:6379/0"
   DOCLING_SERVE_ENG_RQ_QUEUE_NAME: "convert"
   DOCLING_SERVE_ENABLE_UI: "1"
+

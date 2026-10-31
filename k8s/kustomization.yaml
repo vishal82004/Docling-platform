@@ -7,3 +7,5 @@ resources:
   - redis.yaml
   - docling-api.yaml
   - docling-worker.yaml
+  - mlflow.yaml
+
