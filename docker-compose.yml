@@ -20,11 +20,17 @@ services:
       DOCLING_SERVE_ENG_KIND: "rq"
       DOCLING_SERVE_ENG_RQ_REDIS_URL: "redis://redis:6379/0"
       DOCLING_SERVE_ENG_RQ_QUEUE_NAME: "convert"
+      DOCLING_SERVE_OTEL_ENABLE_TRACES: "true"
+      DOCLING_SERVE_OTEL_SERVICE_NAME: "docling-serve"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
     ports:
       - "5001:5001"
     depends_on:
       redis:
         condition: service_healthy
+      jaeger:
+        condition: service_started
     restart: unless-stopped
 
   docling-worker:
@@ -35,9 +41,15 @@ services:
       DOCLING_SERVE_ENG_KIND: "rq"
       DOCLING_SERVE_ENG_RQ_REDIS_URL: "redis://redis:6379/0"
       DOCLING_SERVE_ENG_RQ_QUEUE_NAME: "convert"
+      DOCLING_SERVE_OTEL_ENABLE_TRACES: "true"
+      DOCLING_SERVE_OTEL_SERVICE_NAME: "docling-serve-worker"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
     depends_on:
       redis:
         condition: service_healthy
+      jaeger:
+        condition: service_started
     restart: unless-stopped
 
   mlflow:

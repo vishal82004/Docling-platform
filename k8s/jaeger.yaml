@@ -60,3 +60,4 @@ spec:
       name: otlp-http
   selector:
     app.kubernetes.io/name: jaeger
+

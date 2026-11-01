@@ -8,4 +8,9 @@ data:
   DOCLING_SERVE_ENG_RQ_REDIS_URL: "redis://redis.docling-platform.svc.cluster.local:6379/0"
   DOCLING_SERVE_ENG_RQ_QUEUE_NAME: "convert"
   DOCLING_SERVE_ENABLE_UI: "1"
+  DOCLING_SERVE_OTEL_ENABLE_TRACES: "true"
+  DOCLING_SERVE_OTEL_SERVICE_NAME: "docling-serve"
+  OTEL_EXPORTER_OTLP_ENDPOINT: "http://jaeger.docling-platform.svc.cluster.local:4317"
+  OTEL_EXPORTER_OTLP_INSECURE: "true"
+
 
