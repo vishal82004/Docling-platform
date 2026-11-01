@@ -24,6 +24,18 @@ if str(SCRIPT_DIR) not in sys.path:
 from client import DoclingClient, TaskFailedError
 
 try:
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+    from monitoring.telemetry import trace_span
+except Exception:
+    from contextlib import contextmanager
+
+    @contextmanager
+    def trace_span(name, attributes=None):
+        yield None
+
+
+try:
     import mlflow
 
     MLFLOW_AVAILABLE = True
@@ -85,67 +97,74 @@ def run_smoke_test(
     }
 
     try:
-        # Step 1: Health check
-        print(f"[1/4] Checking API health at {base_url}/health...")
-        t0 = time.perf_counter()
-        health_res = client.health()
-        t1 = time.perf_counter()
-        print(f"      Health OK: {health_res} ({t1 - t0:.3f}s)")
-        report["steps"]["health_check"] = {
-            "status": "passed",
-            "latency_seconds": round(t1 - t0, 4),
-            "response": health_res,
-        }
+        with trace_span("docling_smoke_test", {"sample_url": sample_url, "base_url": base_url}):
+            # Step 1: Health check
+            print(f"[1/4] Checking API health at {base_url}/health...")
+            t0 = time.perf_counter()
+            with trace_span("health_check", {"base_url": base_url}):
+                health_res = client.health()
+            t1 = time.perf_counter()
+            print(f"      Health OK: {health_res} ({t1 - t0:.3f}s)")
+            report["steps"]["health_check"] = {
+                "status": "passed",
+                "latency_seconds": round(t1 - t0, 4),
+                "response": health_res,
+            }
 
-        # Step 2: Submit async conversion
-        print(f"[2/4] Submitting async conversion job for: {sample_url}...")
-        payload = client.build_url_payload(sample_url, to_formats=["md"])
-        t0 = time.perf_counter()
-        submission = client.submit_async(payload)
-        t1 = time.perf_counter()
-        task_id = submission["task_id"]
-        initial_status = submission.get("task_status", "unknown")
-        print(f"      Submitted successfully. Task ID: {task_id} (Initial Status: {initial_status}) ({t1 - t0:.3f}s)")
-        report["steps"]["submission"] = {
-            "status": "passed",
-            "latency_seconds": round(t1 - t0, 4),
-            "task_id": task_id,
-            "initial_status": initial_status,
-        }
+            # Step 2: Submit async conversion
+            print(f"[2/4] Submitting async conversion job for: {sample_url}...")
+            payload = client.build_url_payload(sample_url, to_formats=["md"])
+            t0 = time.perf_counter()
+            with trace_span("submit_async_job", {"sample_url": sample_url}):
+                submission = client.submit_async(payload)
+            t1 = time.perf_counter()
+            task_id = submission["task_id"]
+            initial_status = submission.get("task_status", "unknown")
+            print(
+                f"      Submitted successfully. Task ID: {task_id} (Initial Status: {initial_status}) ({t1 - t0:.3f}s)"
+            )
+            report["steps"]["submission"] = {
+                "status": "passed",
+                "latency_seconds": round(t1 - t0, 4),
+                "task_id": task_id,
+                "initial_status": initial_status,
+            }
 
-        # Step 3: Poll until completion
-        print(f"[3/4] Polling task {task_id} until completion (max {timeout}s)...")
-        t0 = time.perf_counter()
-        status_data = client.wait_for_completion(
-            task_id=task_id, timeout=timeout, poll_interval=poll_interval, fail_on_error=False
-        )
-        t1 = time.perf_counter()
-        final_status = status_data.get("task_status")
-        print(f"      Task reached terminal status: '{final_status}' in {t1 - t0:.2f}s")
-        report["steps"]["polling"] = {
-            "status": "passed" if final_status == "success" else "failed",
-            "polling_duration_seconds": round(t1 - t0, 4),
-            "final_task_status": final_status,
-            "status_response": status_data,
-        }
+            # Step 3: Poll until completion
+            print(f"[3/4] Polling task {task_id} until completion (max {timeout}s)...")
+            t0 = time.perf_counter()
+            with trace_span("wait_for_completion", {"docling.task_id": task_id}):
+                status_data = client.wait_for_completion(
+                    task_id=task_id, timeout=timeout, poll_interval=poll_interval, fail_on_error=False
+                )
+            t1 = time.perf_counter()
+            final_status = status_data.get("task_status")
+            print(f"      Task reached terminal status: '{final_status}' in {t1 - t0:.2f}s")
+            report["steps"]["polling"] = {
+                "status": "passed" if final_status == "success" else "failed",
+                "polling_duration_seconds": round(t1 - t0, 4),
+                "final_task_status": final_status,
+                "status_response": status_data,
+            }
 
-        if final_status != "success":
-            raise TaskFailedError(f"Task finished with non-success status: {final_status}")
+            if final_status != "success":
+                raise TaskFailedError(f"Task finished with non-success status: {final_status}")
 
-        # Step 4: Verify result retrieval
-        print(f"[4/4] Verifying result retrieval from /v1/result/{task_id}...")
-        t0 = time.perf_counter()
-        result_data = client.get_result(task_id)
-        t1 = time.perf_counter()
-        doc_count = len(result_data.get("documents", [])) if isinstance(result_data, dict) else 0
-        print(f"      Result retrieved OK. Documents converted: {doc_count} ({t1 - t0:.3f}s)")
-        report["steps"]["result_retrieval"] = {
-            "status": "passed",
-            "latency_seconds": round(t1 - t0, 4),
-            "documents_count": doc_count,
-        }
+            # Step 4: Verify result retrieval
+            print(f"[4/4] Verifying result retrieval from /v1/result/{task_id}...")
+            t0 = time.perf_counter()
+            with trace_span("get_result", {"docling.task_id": task_id}):
+                result_data = client.get_result(task_id)
+            t1 = time.perf_counter()
+            doc_count = len(result_data.get("documents", [])) if isinstance(result_data, dict) else 0
+            print(f"      Result retrieved OK. Documents converted: {doc_count} ({t1 - t0:.3f}s)")
+            report["steps"]["result_retrieval"] = {
+                "status": "passed",
+                "latency_seconds": round(t1 - t0, 4),
+                "documents_count": doc_count,
+            }
 
-        report["success"] = True
+            report["success"] = True
 
     except Exception as exc:
         print(f"[ERROR] Smoke test failed: {exc}", file=sys.stderr)
@@ -175,6 +194,7 @@ def run_smoke_test(
         with open(report_path, "w", encoding="utf-8") as f:
             json.dump(report, f, indent=2)
         print(f"\n[REPORT] Saved smoke test report to {report_path}")
+        print("[Jaeger] View live distributed trace: http://localhost:16686 (Service: 'docling-platform')")
 
     return report
 
