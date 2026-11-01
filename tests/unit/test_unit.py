@@ -135,5 +135,25 @@ class TestDoclingClientUnit(unittest.TestCase):
         self.assertNotEqual(res["task_status"], "success")
 
 
+class TestOpenTelemetryTelemetry(unittest.TestCase):
+    """Unit tests validating OpenTelemetry tracer initialization and span context manager."""
+
+    def test_trace_span_context_manager(self):
+        """Verify trace_span creates a span and records attributes without throwing exceptions."""
+        from monitoring.telemetry import get_tracer, trace_span
+
+        tracer = get_tracer()
+        self.assertIsNotNone(tracer)
+
+        # Normal execution
+        with trace_span("unit_test_span", {"test.attr": "value", "count": 42}) as span:
+            self.assertIsNotNone(span)
+
+        # Exception handling inside span
+        with self.assertRaises(ValueError):
+            with trace_span("failing_test_span", {"error.test": True}):
+                raise ValueError("Expected test error")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -118,7 +118,11 @@ docling-platform/
 ├── infra/
 │   └── terraform/                    # Cloud infrastructure (Azure AKS & network)
 ├── k8s/                              # Kubernetes manifests & KEDA ScaledObjects
-├── monitoring/                       # Prometheus alerts & Grafana dashboard specs
+│   └── jaeger.yaml                   # Distributed tracing Jaeger All-in-One deployment
+├── monitoring/                       # Prometheus alerts, Grafana dashboards & OTel
+│   ├── telemetry.py                  # OpenTelemetry tracer & span context manager
+│   ├── alerts.yml                    # Prometheus alerting rules
+│   └── grafana/                      # Provisioned Grafana dashboards & datasources
 ├── reports/                          # Benchmark and failure test logs (Phases 1-3)
 ├── scripts/
 │   ├── client.py                     # Reusable Docling API client abstraction
@@ -146,6 +150,7 @@ docker compose ps
 The services are exposed and immediately accessible:
 - **Docling Serve Web UI:** [http://localhost:5001/](http://localhost:5001/)
 - **Docling Interactive API Docs (Swagger):** [http://localhost:5001/docs](http://localhost:5001/docs)
+- **Jaeger Distributed Tracing UI:** [http://localhost:16686/](http://localhost:16686/) *(OpenTelemetry OTLP receiver on port `4318`)*
 - **MLflow Experiment Tracking & Live Traces:** [http://localhost:5000/](http://localhost:5000/)
 - **Grafana Operational Dashboard:** [http://localhost:3000/](http://localhost:3000/) *(Login: `admin` / `admin`)*
 - **Prometheus Metrics & Alerts Engine:** [http://localhost:9090/](http://localhost:9090/)
@@ -157,12 +162,12 @@ py -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements-dev.txt
 
-# Run automated smoke test (also logged to MLflow Traces)
+# Run automated smoke test (logged to MLflow Traces & Jaeger)
 python scripts/smoke_test.py
 ```
 
-### 3. Convert Documents with Live MLflow Tracing
-Convert any document (online URL or local file) and automatically inspect its execution span and converted content in MLflow:
+### 3. Convert Documents with OpenTelemetry & MLflow Tracing
+Convert any document (online URL or local file) and automatically emit distributed OpenTelemetry traces to Jaeger and MLflow:
 ```powershell
 # Convert a document via URL
 python scripts/convert.py "https://arxiv.org/pdf/2501.17887"
@@ -170,7 +175,10 @@ python scripts/convert.py "https://arxiv.org/pdf/2501.17887"
 # Or convert a local file and save the markdown output
 python scripts/convert.py path/to/document.pdf -o output/converted.md
 ```
-Open **[http://localhost:5000/](http://localhost:5000/)** and click the **"Traces"** tab to inspect the conversion span, latency breakdown, and converted markdown preview.
+Open **[http://localhost:16686/](http://localhost:16686/)** (Jaeger UI):
+- Select Service: **`docling-platform`**
+- Click **"Find Traces"** to inspect the root `docling_convert` span and child spans: `submit_async_job`, `wait_for_completion`, and `get_result`.
+- In MLflow at **[http://localhost:5000/](http://localhost:5000/)**, click the **"Traces"** tab to inspect the conversion span, latency breakdown, and converted markdown preview.
 
 ### 4. Run Unit and Integration Tests
 

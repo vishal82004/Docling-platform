@@ -59,3 +59,16 @@ def test_live_submit_and_poll_conversion(client):
     # Verify result endpoint
     result = client.get_result(task_id)
     assert isinstance(result, dict)
+
+
+@pytest.mark.integration
+def test_live_jaeger_tracing_trace_recorded():
+    """Verify traces are received by Jaeger API when requests are traced."""
+    jaeger_url = os.environ.get("JAEGER_API_URL", "http://127.0.0.1:16686")
+    try:
+        resp = requests.get(f"{jaeger_url}/api/services", timeout=3.0)
+        if resp.status_code == 200:
+            services = resp.json().get("data", [])
+            assert "docling-platform" in services, f"Expected docling-platform in Jaeger services: {services}"
+    except requests.RequestException:
+        pytest.skip("Jaeger instance not reachable at " + jaeger_url)

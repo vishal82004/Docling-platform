@@ -8,6 +8,19 @@ from typing import Any, Dict, List, Optional
 
 import requests
 
+try:
+    import sys
+
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+    from monitoring.telemetry import trace_span
+except Exception:
+    from contextlib import contextmanager
+
+    @contextmanager
+    def trace_span(name: str, attributes: Optional[Dict[str, Any]] = None):
+        yield None
+
+
 TERMINAL_STATUSES = {"success", "failure", "partial_success", "skipped"}
 NON_TERMINAL_STATUSES = {"pending", "started"}
 
@@ -150,20 +163,33 @@ class DoclingClient:
 
         source_str = str(source)
         is_url = source_str.startswith("http://") or source_str.startswith("https://")
+        format_list = to_formats or ["md"]
 
-        if is_url:
-            payload = self.build_url_payload(source_str, to_formats=to_formats)
-            submission = self.submit_async(payload)
-        else:
-            submission = self.submit_file_async(source, to_formats=to_formats)
+        with trace_span(
+            "docling_convert", {"document.source": source_str, "document.format": ",".join(format_list)}
+        ) as root_span:
+            if is_url:
+                with trace_span("submit_async_job", {"source.type": "url", "source.url": source_str}):
+                    payload = self.build_url_payload(source_str, to_formats=format_list)
+                    submission = self.submit_async(payload)
+            else:
+                with trace_span("submit_async_job", {"source.type": "file", "source.file": source_str}):
+                    submission = self.submit_file_async(source, to_formats=format_list)
 
-        task_id = submission["task_id"]
-        status_data = self.wait_for_completion(
-            task_id=task_id, timeout=timeout, poll_interval=poll_interval, fail_on_error=True
-        )
-        result_data = self.get_result(task_id)
-        return {
-            "task_id": task_id,
-            "status": status_data.get("task_status", "success"),
-            "result": result_data,
-        }
+            task_id = submission["task_id"]
+            if root_span:
+                root_span.set_attribute("docling.task_id", task_id)
+
+            with trace_span("wait_for_completion", {"docling.task_id": task_id}):
+                status_data = self.wait_for_completion(
+                    task_id=task_id, timeout=timeout, poll_interval=poll_interval, fail_on_error=True
+                )
+
+            with trace_span("get_result", {"docling.task_id": task_id}):
+                result_data = self.get_result(task_id)
+
+            return {
+                "task_id": task_id,
+                "status": status_data.get("task_status", "success"),
+                "result": result_data,
+            }

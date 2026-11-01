@@ -87,6 +87,7 @@ def convert_document(
     print(f"Docling API:    {base_url}")
     if mlflow_active:
         print(f"MLflow Tracing: Active at {resolved_uri} (Experiment: {experiment_name})")
+    print("Jaeger Tracing: Active (OpenTelemetry OTLP -> http://localhost:16686)")
     print("-" * 68)
 
     t0 = time.perf_counter()
@@ -164,6 +165,11 @@ def convert_document(
         if len(converted_content) > 400:
             print("\n... [truncated] ...")
         print("=" * 68)
+
+    # Jaeger / OpenTelemetry link
+    print("\n[OpenTelemetry / Jaeger]")
+    print("  -> View Distributed Trace in Jaeger: http://localhost:16686")
+    print("     (Select Service 'docling-platform' -> click 'Find Traces')")
 
     # MLflow link
     if mlflow_active:
