@@ -341,26 +341,59 @@
       "type": "row"
     },
     {
+      "gridPos": { "h": 10, "w": 8, "x": 0, "y": 24 },
+      "id": 11,
+      "options": {
+        "content": "### 🔍 Distributed Tracing Guide\n\nGrafana displays distributed trace waterfalls directly:\n\n- 🚀 **[Search All Traces in Grafana Explore](/explore?schemaVersion=1&panes=%7B%22x%22:%7B%22datasource%22:%22jaeger%22,%22queries%22:[%7B%22refId%22:%22A%22,%22queryType%22:%22search%22,%22service%22:%22docling-serve%22%7D],%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D)**: Search all live traces by Service, Operation, or Duration.\n- 🌐 **[Open Jaeger UI (Native)](http://localhost:16686)**: Standalone Jaeger search & dependency DAG.\n\n**To view any trace on this dashboard:**\nPaste any Trace ID into the **`Trace ID`** box at the top bar.",
+        "mode": "markdown"
+      },
+      "title": "Tracing Guide & Explore Link",
+      "type": "text"
+    },
+    {
       "datasource": { "type": "jaeger", "uid": "jaeger" },
-      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 24 },
+      "gridPos": { "h": 10, "w": 16, "x": 8, "y": 24 },
       "id": 10,
       "options": {},
       "targets": [
         {
           "datasource": { "type": "jaeger", "uid": "jaeger" },
-          "queryType": "search",
-          "service": "docling-serve",
-          "limit": 20,
+          "query": "${trace_id}",
           "refId": "A"
         }
       ],
-      "title": "Live Distributed Traces (FastAPI, RQ Queue & Worker Spans)",
+      "title": "Live Trace Flame Graph (${trace_id})",
       "type": "traces"
     }
   ],
   "refresh": "5s",
   "schemaVersion": 39,
   "tags": ["docling", "queue", "observability", "sre"],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "b3195d6433b139ff9b217d7287a72f95",
+          "value": "b3195d6433b139ff9b217d7287a72f95"
+        },
+        "description": "Jaeger Trace ID to display in waterfall panel below",
+        "hide": 0,
+        "label": "Trace ID",
+        "name": "trace_id",
+        "options": [
+          {
+            "selected": true,
+            "text": "b3195d6433b139ff9b217d7287a72f95",
+            "value": "b3195d6433b139ff9b217d7287a72f95"
+          }
+        ],
+        "query": "b3195d6433b139ff9b217d7287a72f95",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
   "time": { "from": "now-15m", "to": "now" },
   "timepicker": {},
   "timezone": "browser",
