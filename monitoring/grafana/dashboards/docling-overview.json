@@ -332,6 +332,30 @@
       ],
       "title": "Ingestion API CPU Utilization",
       "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 23 },
+      "id": 102,
+      "title": "🔍 Distributed Tracing & Execution Waterfall (Jaeger)",
+      "type": "row"
+    },
+    {
+      "datasource": { "type": "jaeger", "uid": "jaeger" },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 24 },
+      "id": 10,
+      "options": {},
+      "targets": [
+        {
+          "datasource": { "type": "jaeger", "uid": "jaeger" },
+          "queryType": "search",
+          "service": "docling-serve",
+          "limit": 20,
+          "refId": "A"
+        }
+      ],
+      "title": "Live Distributed Traces (FastAPI, RQ Queue & Worker Spans)",
+      "type": "traces"
     }
   ],
   "refresh": "5s",
