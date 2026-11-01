@@ -106,6 +106,7 @@ docling-platform/
 ├── docs/
 │   ├── architecture.md               # Detailed system architecture specification
 │   ├── benchmark.md                  # Phase 3 worker scaling benchmark report
+│   ├── opentelemetry_jaeger_setup_guide.md # Complete OpenTelemetry, Jaeger & Grafana deep-dive
 │   └── runbooks/
 │       ├── release_rules.md          # SRE release gating & promotion rules
 │       └── rollback.md               # Disaster recovery & rollback runbook
