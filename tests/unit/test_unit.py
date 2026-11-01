@@ -140,7 +140,10 @@ class TestOpenTelemetryTelemetry(unittest.TestCase):
 
     def test_trace_span_context_manager(self):
         """Verify trace_span creates a span and records attributes without throwing exceptions."""
-        from monitoring.telemetry import get_tracer, trace_span
+        from monitoring.telemetry import OTEL_AVAILABLE, get_tracer, trace_span
+
+        if not OTEL_AVAILABLE:
+            self.skipTest("OpenTelemetry SDK not installed in test environment")
 
         tracer = get_tracer()
         self.assertIsNotNone(tracer)

@@ -52,7 +52,9 @@ jobs:
           python-version: "3.12"
 
       - name: Install Test Dependencies
-        run: pip install requests pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
 
       - name: Run Unit Tests
         run: pytest tests/unit -v --junitxml=reports/unit-test-results.xml

@@ -6,7 +6,8 @@ exclude = [
     "mlruns",
     "mlartifacts",
     "reports",
-    "scratch"
+    "scratch",
+    "docs"
 ]
 
 [tool.ruff.lint]

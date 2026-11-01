@@ -9,7 +9,7 @@
       "invoice_date": false,
       "total": true
     },
-    "latency_sec": 0.0162,
+    "latency_sec": 0.0157,
     "extracted": {
       "invoice_number": "APC-441",
       "vendor": "Alpha Packaging Co.",
@@ -34,7 +34,7 @@
       "invoice_date": false,
       "total": true
     },
-    "latency_sec": 0.0164,
+    "latency_sec": 0.0156,
     "extracted": {
       "invoice_number": "ZMS-881",
       "vendor": "Zenith Medical Supplies Corp.",
@@ -59,7 +59,7 @@
       "invoice_date": true,
       "total": true
     },
-    "latency_sec": 0.0166,
+    "latency_sec": 0.0159,
     "extracted": {
       "invoice_number": null,
       "vendor": "Northern Woodcraft Shop",

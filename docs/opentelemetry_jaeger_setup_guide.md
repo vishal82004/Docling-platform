@@ -146,6 +146,7 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 
+
 def init_tracer(service_name="docling-platform", endpoint="http://localhost:4318/v1/traces"):
     resource = Resource.create({"service.name": service_name})
     provider = TracerProvider(resource=resource)
@@ -293,3 +294,4 @@ python scripts/convert.py evaluation/dataset/invoice-eval-v1/documents/inv_001.m
 - **Grafana Unified Dashboard:** [http://localhost:3000/d/docling-platform-overview](http://localhost:3000/d/docling-platform-overview)
 - **Grafana Explore (Trace Search):** [http://localhost:3000/explore](http://localhost:3000/explore)
 - **MLflow Traces UI:** [http://localhost:5000/](http://localhost:5000/)
+
