@@ -1,0 +1,77 @@
+[
+  {
+    "doc_id": "inv_012",
+    "is_schema_valid": true,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": true,
+      "vendor": true,
+      "invoice_date": false,
+      "total": true
+    },
+    "latency_sec": 2.0178,
+    "extracted": {
+      "invoice_number": "APC-441",
+      "vendor": "Alpha Packaging Co.",
+      "invoice_date": "2026-05-12",
+      "total": 320.15
+    },
+    "ground_truth": {
+      "invoice_number": "APC-441",
+      "vendor": "Alpha Packaging",
+      "invoice_date": "2026-12-05",
+      "total": 320.15
+    },
+    "error": null
+  },
+  {
+    "doc_id": "inv_017",
+    "is_schema_valid": true,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": true,
+      "vendor": true,
+      "invoice_date": false,
+      "total": true
+    },
+    "latency_sec": 2.0165,
+    "extracted": {
+      "invoice_number": "ZMS-881",
+      "vendor": "Zenith Medical Supplies Corp.",
+      "invoice_date": "2026-09-05",
+      "total": 2840.6
+    },
+    "ground_truth": {
+      "invoice_number": "ZMS-881",
+      "vendor": "Zenith Medical Supplies",
+      "invoice_date": "2026-05-09",
+      "total": 2840.6
+    },
+    "error": null
+  },
+  {
+    "doc_id": "inv_021",
+    "is_schema_valid": true,
+    "exact_match": false,
+    "field_matches": {
+      "invoice_number": true,
+      "vendor": false,
+      "invoice_date": true,
+      "total": true
+    },
+    "latency_sec": 2.0271,
+    "extracted": {
+      "invoice_number": null,
+      "vendor": "Northern Woodcraft Shop",
+      "invoice_date": "2026-09-14",
+      "total": 560.0
+    },
+    "ground_truth": {
+      "invoice_number": null,
+      "vendor": "Northern Woodcraft",
+      "invoice_date": "2026-09-14",
+      "total": 560.0
+    },
+    "error": null
+  }
+]

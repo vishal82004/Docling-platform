@@ -103,8 +103,36 @@ services:
       - "4318:4318"
     restart: unless-stopped
 
+  vllm:
+    image: vllm/vllm-openai:latest
+    command:
+      - "--model"
+      - "Qwen/Qwen2.5-0.5B-Instruct"
+      - "--port"
+      - "8000"
+      - "--gpu-memory-utilization"
+      - "0.8"
+      - "--max-model-len"
+      - "4096"
+    environment:
+      - MODEL_NAME=Qwen/Qwen2.5-0.5B-Instruct
+    ports:
+      - "8000:8000"
+    volumes:
+      - vllm-cache:/root/.cache/huggingface
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
 volumes:
   redis-data:
   mlflow-data:
   prometheus-data:
   grafana-data:
+  vllm-cache:

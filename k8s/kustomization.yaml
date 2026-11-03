@@ -9,5 +9,6 @@ resources:
   - docling-worker.yaml
   - mlflow.yaml
   - jaeger.yaml
+  - vllm.yaml
   - keda-scaledobject.yaml
 

@@ -158,5 +158,88 @@ class TestOpenTelemetryTelemetry(unittest.TestCase):
                 raise ValueError("Expected test error")
 
 
+class TestVLLMClientUnit(unittest.TestCase):
+    """Unit tests validating vLLM Client SDK, Pydantic schemas, and fallback heuristic extractors."""
+
+    def test_pydantic_schema_validation(self):
+        """Validate strict Pydantic schemas for InvoiceExtraction and LineItem."""
+        from pydantic import ValidationError
+
+        from scripts.vllm_client import InvoiceExtraction, LineItem
+
+        # Valid line item
+        item = LineItem(item_number=1, description="Cloud Hosting Service", quantity=2.0, unit_price=50.0, amount=100.0)
+        self.assertEqual(item.description, "Cloud Hosting Service")
+        self.assertEqual(item.amount, 100.0)
+
+        # LineItem missing required 'description' must fail
+        with self.assertRaises(ValidationError):
+            LineItem()
+
+        # Valid InvoiceExtraction
+        invoice = InvoiceExtraction(
+            invoice_number="INV-2026-001",
+            vendor="Acme Corp",
+            invoice_date="2026-01-15",
+            total=1450.75,
+            currency="USD",
+            line_items=[item],
+            confidence_score=0.99,
+        )
+        self.assertEqual(invoice.invoice_number, "INV-2026-001")
+        self.assertEqual(invoice.total, 1450.75)
+        self.assertEqual(len(invoice.line_items), 1)
+
+    def test_fallback_heuristic_extraction(self):
+        """Verify fallback extraction extracts fields from sample Markdown text."""
+        from scripts.vllm_client import VLLMClient
+
+        sample_markdown = """
+        # Acme Industrial Supplies, Inc.
+        **Invoice Number:** INV-2026-001
+        **Date:** 2026-01-15
+
+        | Item | Quantity | Unit Price | Total |
+        | --- | --- | --- | --- |
+        | Industrial Drill Bits | 5 | $45.00 | $225.00 |
+        | Hydraulic Sealant | 2 | $80.00 | $160.00 |
+
+        **TOTAL AMOUNT DUE:** $1,450.75
+        """
+        client = VLLMClient(base_url="http://127.0.0.1:9999/v1")
+        # Ensure fallback triggers because server is offline
+        self.assertFalse(client.is_reachable())
+
+        result = client.extract_from_markdown(sample_markdown)
+        self.assertEqual(result.invoice_number, "INV-2026-001")
+        self.assertEqual(result.vendor, "Acme Industrial Supplies")
+        self.assertEqual(result.invoice_date, "2026-01-15")
+        self.assertEqual(result.total, 1450.75)
+        self.assertGreaterEqual(len(result.line_items), 1)
+
+    @patch("scripts.vllm_client.VLLMClient.is_reachable", return_value=True)
+    def test_mocked_live_openai_completion(self, mock_reachable):
+        """Verify _extract_live correctly parses OpenAI chat completion response."""
+        from scripts.vllm_client import VLLMClient
+
+        client = VLLMClient(base_url="http://mock-vllm:8000/v1")
+        mock_openai_client = MagicMock()
+        client._client = mock_openai_client
+
+        mock_choice = MagicMock()
+        mock_choice.message.content = '{"invoice_number": "INV-MOCK-99", "vendor": "Mock Corp", "invoice_date": "2026-05-20", "total": 999.50, "currency": "USD", "line_items": []}'
+        mock_response = MagicMock()
+        mock_response.choices = [mock_choice]
+        mock_response.usage.prompt_tokens = 45
+        mock_response.usage.completion_tokens = 30
+        mock_openai_client.chat.completions.create.return_value = mock_response
+
+        result = client.extract_from_markdown("# Some Doc")
+        self.assertEqual(result.invoice_number, "INV-MOCK-99")
+        self.assertEqual(result.vendor, "Mock Corp")
+        self.assertEqual(result.invoice_date, "2026-05-20")
+        self.assertEqual(result.total, 999.50)
+
+
 if __name__ == "__main__":
     unittest.main()

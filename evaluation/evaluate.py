@@ -35,6 +35,19 @@ PROJECT_ROOT = EVAL_DIR.parent
 DEFAULT_DATASET_DIR = EVAL_DIR / "dataset" / "invoice-eval-v1"
 DEFAULT_REPORTS_DIR = EVAL_DIR / "reports"
 
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+if str(PROJECT_ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+
+try:
+    from vllm_client import VLLMClient
+except ImportError:
+    try:
+        from scripts.vllm_client import VLLMClient
+    except ImportError:
+        VLLMClient = None
+
 
 def resolve_mlflow_tracking_uri(explicit_uri: Optional[str] = None) -> Optional[str]:
     """Resolve MLflow tracking URI: explicit argument > env var > local container > None (local ./mlruns)."""
@@ -368,6 +381,48 @@ class FlawedExtractor:
         return data, is_valid, error_msg
 
 
+class VLLMExtractor:
+    """
+    Production LLM extraction candidate utilizing vLLM's OpenAI-compatible serving engine.
+    Applies Pydantic data contract validation to extract structured invoice entities.
+    """
+
+    def __init__(self, base_url: Optional[str] = None, model: Optional[str] = None):
+        if VLLMClient is None:
+            raise ImportError("VLLMClient is not available. Ensure scripts/vllm_client.py is on sys.path.")
+        kwargs: Dict[str, Any] = {}
+        if base_url:
+            kwargs["base_url"] = base_url
+        if model:
+            kwargs["model"] = model
+        self.client = VLLMClient(**kwargs)
+
+    def extract(self, text: str) -> Tuple[Dict[str, Any], bool, Optional[str]]:
+        try:
+            extraction = self.client.extract_from_markdown(text)
+            data = {
+                "invoice_number": extraction.invoice_number,
+                "vendor": extraction.vendor,
+                "invoice_date": extraction.invoice_date,
+                "total": extraction.total,
+            }
+            # Validate schema conformance
+            is_valid = True
+            err = None
+            if not isinstance(data.get("invoice_number"), (str, type(None))):
+                is_valid = False
+            if not isinstance(data.get("vendor"), (str, type(None))):
+                is_valid = False
+            if not isinstance(data.get("invoice_date"), (str, type(None))):
+                is_valid = False
+            if data.get("total") is not None and not isinstance(data.get("total"), (int, float)):
+                is_valid = False
+
+            return data, is_valid, err
+        except Exception as e:
+            return {}, False, str(e)
+
+
 # =====================================================================
 # 3. Main Evaluation Runner
 # =====================================================================
@@ -411,6 +466,9 @@ def run_evaluation(
     elif candidate == "flawed":
         extractor = FlawedExtractor()
         prompt_version = "extraction-flawed"
+    elif candidate == "vllm":
+        extractor = VLLMExtractor()
+        prompt_version = "extraction-vllm-qwen"
     else:
         raise ValueError(f"Unknown candidate extractor: {candidate}")
 
@@ -648,7 +706,7 @@ def run_evaluation(
 def main():
     parser = argparse.ArgumentParser(description="Document Intelligence MLOps Evaluation Runner")
     parser.add_argument(
-        "--candidate", choices=["baseline", "flawed"], default="baseline", help="Candidate extraction engine"
+        "--candidate", choices=["baseline", "flawed", "vllm"], default="baseline", help="Candidate extraction engine"
     )
     parser.add_argument("--dataset-dir", default=str(DEFAULT_DATASET_DIR), help="Path to evaluation dataset")
     parser.add_argument("--reports-dir", default=str(DEFAULT_REPORTS_DIR), help="Path to write reports")

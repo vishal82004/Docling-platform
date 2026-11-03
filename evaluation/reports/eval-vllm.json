@@ -1,0 +1,59 @@
+{
+  "evaluation_name": "invoice_extraction_evaluation",
+  "candidate": "vllm",
+  "prompt_version": "extraction-vllm-qwen",
+  "dataset_version": "invoice-eval-v1",
+  "timestamp": "2026-11-03T17:13:50.611392+00:00",
+  "total_documents": 25,
+  "total_elapsed_seconds": 52.291,
+  "metrics": {
+    "overall_field_accuracy": 0.97,
+    "exact_match_rate": 0.88,
+    "schema_valid_rate": 1.0,
+    "failure_rate": 0.0,
+    "field_accuracies": {
+      "invoice_number": 1.0,
+      "vendor": 0.96,
+      "invoice_date": 0.92,
+      "total": 1.0
+    },
+    "latency": {
+      "avg_sec": 2.0813,
+      "p50_sec": 2.0198,
+      "p95_sec": 2.0305,
+      "min_sec": 2.0107,
+      "max_sec": 3.5784
+    }
+  },
+  "quality_gate": {
+    "overall_passed": true,
+    "checks": {
+      "min_field_accuracy": {
+        "target": 0.85,
+        "actual": 0.97,
+        "passed": true
+      },
+      "min_schema_valid_rate": {
+        "target": 0.95,
+        "actual": 1.0,
+        "passed": true
+      },
+      "min_exact_match_rate": {
+        "target": 0.75,
+        "actual": 0.88,
+        "passed": true
+      },
+      "max_failure_rate": {
+        "target": 0.05,
+        "actual": 0.0,
+        "passed": true
+      },
+      "max_p95_latency_sec": {
+        "target": 5.0,
+        "actual": 2.0305,
+        "passed": true
+      }
+    }
+  },
+  "sample_errors_count": 3
+}
